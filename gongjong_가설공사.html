@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>가설공사 시각화</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #e8eee7;
+    }
+    header {
+      background-color: #e8eee7;
+      color: #183524;
+      padding: 10px 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header img {
+      height: 30px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    header div {
+      display: flex;
+      align-items: center;
+    }
+    h1 {
+      font-size: 24px;
+    }
+    main {
+      display: flex;
+      height: calc(100vh - 50px);
+    }
+    #sidebar {
+      background-color: #183524;
+      width: 250px;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    #sidebar button {
+      background-color: #a3b29f;
+      color: #183524;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    #sidebar button:hover {
+      background-color: #90a590;
+    }
+    #content {
+      flex-grow: 1;
+      background-color: #e8eee7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+    #content img, #content iframe {
+      max-width: 100%;
+      max-height: 90%;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <a href="index.html"><img src="홈버튼.png" alt="홈"></a>
+      <a href="select.html"><img src="뒤로가기.png" alt="뒤로가기"></a>
+    </div>
+    <h1>가설공사</h1>
+  </header>
+  <main>
+    <div id="sidebar">
+      <button onclick="showViz('gephi')">Gephi</button>
+      <button onclick="showViz('barchart')">막대 그래프</button>
+      <button onclick="showViz('heatmap')">히트맵</button>
+      <button onclick="showViz('topics')">주제 분포도</button>
+      <button onclick="showViz('hierarchy')">주제 계층도</button>
+      <button onclick="showViz('wordcloud')">워드클라우드</button>
+    </div>
+    <div id="content">
+      <iframe id="gephi" src="gongjong_가설공사_gephi.html"></iframe>
+      <img id="barchart" src="★최종 분석 결과★/가설공사/가설공사_barchart.png" alt="막대 그래프">
+      <img id="heatmap" src="★최종 분석 결과★/가설공사/가설공사_heatmap.png" alt="히트맵">
+      <img id="topics" src="★최종 분석 결과★/가설공사/가설공사_topics.png" alt="주제 분포도">
+      <img id="hierarchy" src="★최종 분석 결과★/가설공사/가설공사_hierarchy.png" alt="주제 계층도">
+      <img id="wordcloud" src="★최종 분석 결과★/가설공사/가설공사_wordcloud.png" alt="워드클라우드">
+    </div>
+  </main>
+  <script>
+    function showViz(id) {
+      const all = ['gephi', 'barchart', 'heatmap', 'topics', 'hierarchy', 'wordcloud'];
+      all.forEach(el => {
+        const item = document.getElementById(el);
+        item.style.display = (el === id) ? 'block' : 'none';
+      });
+    }
+    // 초기 로딩 시 기본값
+    showViz('topics');
+  </script>
+</body>
+</html>
