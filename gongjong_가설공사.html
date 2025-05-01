@@ -74,7 +74,6 @@
   <header>
     <div>
       <a href="index.html"><img src="홈버튼.png" alt="홈"></a>
-      <a href="select.html"><img src="뒤로가기.png" alt="뒤로가기"></a>
     </div>
     <h1>가설공사</h1>
   </header>
@@ -97,11 +96,6 @@
   </main>
   <script>
     function showViz(id) {
-      if (id === 'gephi') {
-        location.href = 'gongjong_가설공사_gephi.html';
-        return;
-      }
-
       const all = ['barchart', 'heatmap', 'topics', 'hierarchy', 'wordcloud'];
       all.forEach(el => {
         const item = document.getElementById(el);
@@ -109,7 +103,7 @@
       });
     }
 
-    showViz('topics');
+    showViz('topics'); // 기본 표시 그래프
   </script>
 </body>
 </html>
