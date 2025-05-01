@@ -6,8 +6,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
     <style>
-      html, body {{ margin: 0; padding: 0; height: 100%; }}
-      #container {{ width: 100vw; height: 100vh; background: white; }}
+      html, body { margin: 0; padding: 0; height: 100%; }
+      #container { width: 100vw; height: 100vh; background: white; }
     </style>
   </head>
   <body>
@@ -19,74 +19,74 @@
       let clickedNeighbors = new Set();
 
       // 외부 .txt 파일에서 노드 및 엣지 삽입 스크립트 가져오기
-      fetch('공종별_forceAtlas2/가설공사_forceAtlas2.txt')
+      fetch('공종별_forceAtlas2/가설공사.txt')
         .then(res => res.text())
-        .then(code => {{
+        .then(code => {
           eval(code);  // 노드와 엣지를 graph에 추가
-          const renderer = new sigma.Sigma(graph, document.getElementById("container"), {{
+          const renderer = new sigma.Sigma(graph, document.getElementById("container"), {
             labelDensity: 1,
             labelGridCellSize: 20,
             labelPosition: "inside",
             labelAlignment: "center",
-            defaultNodeLabelColor: "#fff",  // 흰색 등 배경 대비 색상
+            defaultNodeLabelColor: "#fff",
             defaultLabelSize: 14,
-          }});
+          });
 
-          function focusNode(nodeId) {{
+          function focusNode(nodeId) {
             const neighbors = new Set();
             graph.forEachNeighbor(nodeId, (n) => neighbors.add(n));
 
-            renderer.setSetting("nodeReducer", (n, attrs) => {{
-              if (n === nodeId || neighbors.has(n)) {{
+            renderer.setSetting("nodeReducer", (n, attrs) => {
+              if (n === nodeId || neighbors.has(n)) {
                 return attrs;
-              }} else {{
-                return {{ ...attrs, label: '', color: '#ccc' }};
-              }}
-            }});
+              } else {
+                return { ...attrs, label: '', color: '#ccc' };
+              }
+            });
 
-            renderer.setSetting("edgeReducer", (e, attrs) => {{
+            renderer.setSetting("edgeReducer", (e, attrs) => {
               const source = graph.source(e);
               const target = graph.target(e);
-              if (source === nodeId || target === nodeId) {{
-                return {{ ...attrs, color: 'rgba(105,105,105,1)' }};
-              }} else {{
-                return {{ ...attrs, color: 'rgba(200,200,200,0.1)' }};
-              }}
-            }});
-          }}
+              if (source === nodeId || target === nodeId) {
+                return { ...attrs, color: 'rgba(105,105,105,1)' };
+              } else {
+                return { ...attrs, color: 'rgba(200,200,200,0.1)' };
+              }
+            });
+          }
 
-          function clearFocus() {{
+          function clearFocus() {
             renderer.setSetting("nodeReducer", null);
-            renderer.setSetting("edgeReducer", (e, attrs) => {{
-              return {{ ...attrs, color: `rgba(105,105,105,${{baseEdgeOpacity}})` }};
-            }});
-          }}
+            renderer.setSetting("edgeReducer", (e, attrs) => {
+              return { ...attrs, color: `rgba(105,105,105,${baseEdgeOpacity})` };
+            });
+          }
 
-          renderer.on("enterNode", (event) => {{
-            if (!clickedNode) {{
+          renderer.on("enterNode", (event) => {
+            if (!clickedNode) {
               focusNode(event.node);
-            }}
-          }});
+            }
+          });
 
-          renderer.on("leaveNode", () => {{
-            if (!clickedNode) {{
+          renderer.on("leaveNode", () => {
+            if (!clickedNode) {
               clearFocus();
-            }}
-          }});
+            }
+          });
 
-          renderer.on("clickNode", (event) => {{
+          renderer.on("clickNode", (event) => {
             clickedNode = event.node;
             clickedNeighbors = new Set();
             graph.forEachNeighbor(clickedNode, (n) => clickedNeighbors.add(n));
             focusNode(clickedNode);
-          }});
+          });
 
-          renderer.on("clickStage", () => {{
+          renderer.on("clickStage", () => {
             clickedNode = null;
             clickedNeighbors.clear();
             clearFocus();
-          }});
-        }})
+          });
+        })
         .catch(err => console.error("스크립트 로딩 오류:", err));
     </script>
   </body>
