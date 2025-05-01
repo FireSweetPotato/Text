@@ -1,22 +1,41 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>가설공사 네트워크 시각화 (Hover 시만 강조, 클릭 강조 유지)</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
-    <style>
-      html, body { margin: 0; padding: 0; height: 100%; }
-      #container { width: 100vw; height: 100vh; background: white; }
-    </style>
-  </head>
-  <body>
-    <div id="container"></div>
-    <script>
+<head>
+  <meta charset="UTF-8">
+  <title>가설공사 Gephi 시각화</title>
+  <script src="https://unpkg.com/graphology@0.21.1/dist/graphology.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/graphology-gexf@0.9.1/dist/graphology-gexf.min.js"></script>
+  <script src="https://unpkg.com/sigma@2.3.0/build/sigma.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #container {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script>
+    // 안전하게 Sigma를 초기화
+    window.addEventListener("load", () => {
+      const container = document.getElementById("container");
+
+      if (!container) {
+        console.error("container not found!");
+        return;
+      }
+
+      // 그래프 생성
       const graph = new graphology.Graph();
 
-      // 예시 노드 및 엣지 삽입
+      // 샘플 노드 및 엣지 (실제 내용은 별도 삽입 필요)
       graph.addNode("설치", { label: "설치", x: 291.733612, y: -68.165535, size: 23.7037033, color: "#c686e9" });
 graph.addNode("비계", { label: "비계", x: -5246.567383, y: 2132.343506, size: 25.0, color: "#c686e9" });
 graph.addNode("자재", { label: "자재", x: -1996.664062, y: 2483.019287, size: 18.194444275000002, color: "#c686e9" });
@@ -3189,72 +3208,68 @@ graph.addEdgeWithKey("e3029", "하부", "손등", { size: 0.047566, color: "rgba
 graph.addEdgeWithKey("e3030", "하부", "조정", { size: 0.045757, color: "rgba(153, 153, 153, 0.6)" });
 graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(153, 153, 153, 0.6)" });
 
-      const baseEdgeOpacity = 0.55;
-      let clickedNode = null;
-      let clickedNeighbors = new Set();
+      const renderer = new Sigma(graph, container);
 
-      const renderer = new Sigma(graph, document.getElementById("container"), {
-        labelDensity: 1,
-        labelGridCellSize: 20,
-        defaultNodeLabelColor: '#000',
-        labelPosition: 'center',
-        labelAlignment: 'center',
-      });
-
-      function focusNode(nodeId) {
-        const neighbors = new Set();
-        graph.forEachNeighbor(nodeId, (n) => neighbors.add(n));
-
-        renderer.setSetting("nodeReducer", (n, attrs) => {
-          if (n === nodeId || neighbors.has(n)) {
-            return attrs;
+      // 인터랙션: 마우스 올릴 때 강조
+      let hoveredNode = null;
+      renderer.on("enterNode", ({ node }) => {
+        hoveredNode = node;
+        renderer.setSetting("nodeReducer", (n, attr) => {
+          if (n === node || graph.hasEdge(node, n) || graph.hasEdge(n, node)) {
+            return { ...attr };
           } else {
-            return { ...attrs, label: '', color: '#ccc' };
+            return { ...attr, color: "#ccc", label: "" };
           }
         });
-
-        renderer.setSetting("edgeReducer", (e, attrs) => {
+        renderer.setSetting("edgeReducer", (e, attr) => {
           const source = graph.source(e);
           const target = graph.target(e);
-          if (source === nodeId || target === nodeId) {
-            return { ...attrs, color: 'rgba(105,105,105,1)' };
+          if (source === node || target === node) {
+            return { ...attr };
           } else {
-            return { ...attrs, color: 'rgba(200,200,200,0.1)' };
+            return { ...attr, color: "rgba(105,105,105,0.1)" };
           }
         });
-      }
+        renderer.refresh();
+      });
 
-      function clearFocus() {
+      renderer.on("leaveNode", () => {
+        hoveredNode = null;
         renderer.setSetting("nodeReducer", null);
-        renderer.setSetting("edgeReducer", (e, attrs) => {
-          return { ...attrs, color: `rgba(105,105,105,${baseEdgeOpacity})` };
+        renderer.setSetting("edgeReducer", null);
+        renderer.refresh();
+      });
+
+      // 클릭 시 강조 유지
+      let clickedNode = null;
+      renderer.on("clickNode", ({ node }) => {
+        clickedNode = node;
+        renderer.setSetting("nodeReducer", (n, attr) => {
+          if (n === node || graph.hasEdge(node, n) || graph.hasEdge(n, node)) {
+            return { ...attr };
+          } else {
+            return { ...attr, color: "#ccc", label: "" };
+          }
         });
-      }
-
-      renderer.on("enterNode", (event) => {
-        if (!clickedNode) {
-          focusNode(event.node);
-        }
-      });
-
-      renderer.on("leaveNode", (event) => {
-        if (!clickedNode) {
-          clearFocus();
-        }
-      });
-
-      renderer.on("clickNode", (event) => {
-        clickedNode = event.node;
-        clickedNeighbors = new Set();
-        graph.forEachNeighbor(clickedNode, (n) => clickedNeighbors.add(n));
-        focusNode(clickedNode);
+        renderer.setSetting("edgeReducer", (e, attr) => {
+          const source = graph.source(e);
+          const target = graph.target(e);
+          if (source === node || target === node) {
+            return { ...attr };
+          } else {
+            return { ...attr, color: "rgba(105,105,105,0.1)" };
+          }
+        });
+        renderer.refresh();
       });
 
       renderer.on("clickStage", () => {
         clickedNode = null;
-        clickedNeighbors.clear();
-        clearFocus();
+        renderer.setSetting("nodeReducer", null);
+        renderer.setSetting("edgeReducer", null);
+        renderer.refresh();
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
