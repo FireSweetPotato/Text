@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,19 +22,16 @@
   <div id="container"></div>
 
   <script>
-    // 안전하게 Sigma를 초기화
     window.addEventListener("load", () => {
       const container = document.getElementById("container");
-
       if (!container) {
         console.error("container not found!");
         return;
       }
 
-      // 그래프 생성
       const graph = new graphology.Graph();
 
-      // 샘플 노드 및 엣지 (실제 내용은 별도 삽입 필요)
+      // 샘플 노드 및 엣지 (★ 실제 데이터 삽입 필요)
       graph.addNode("설치", { label: "설치", x: 291.733612, y: -68.165535, size: 23.7037033, color: "#c686e9" });
 graph.addNode("비계", { label: "비계", x: -5246.567383, y: 2132.343506, size: 25.0, color: "#c686e9" });
 graph.addNode("자재", { label: "자재", x: -1996.664062, y: 2483.019287, size: 18.194444275000002, color: "#c686e9" });
@@ -3210,7 +3206,7 @@ graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(
 
       const renderer = new Sigma(graph, container);
 
-      // 인터랙션: 마우스 올릴 때 강조
+      // hover 시 강조
       let hoveredNode = null;
       renderer.on("enterNode", ({ node }) => {
         hoveredNode = node;
@@ -3235,9 +3231,11 @@ graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(
 
       renderer.on("leaveNode", () => {
         hoveredNode = null;
-        renderer.setSetting("nodeReducer", null);
-        renderer.setSetting("edgeReducer", null);
-        renderer.refresh();
+        if (!clickedNode) {
+          renderer.setSetting("nodeReducer", null);
+          renderer.setSetting("edgeReducer", null);
+          renderer.refresh();
+        }
       });
 
       // 클릭 시 강조 유지
