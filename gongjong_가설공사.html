@@ -3187,12 +3187,9 @@ graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(
 
 
       const renderer = new Sigma(graph, document.getElementById("container"));
-
       let activeNodes = new Set();
 
-      // 마우스 오버 시 인접 노드 강조, 엣지는 흐림 처리
-      renderer.on("enterNode", function (event) {
-        const nodeId = event.node;
+      function updateFocus(nodeId) {
         activeNodes = new Set([nodeId]);
         graph.forEachNeighbor(nodeId, function (neighbor) {
           activeNodes.add(neighbor);
@@ -3209,13 +3206,27 @@ graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(
           const source = graph.source(e);
           const target = graph.target(e);
           if (!activeNodes.has(source) && !activeNodes.has(target)) {
-            return { ...attrs, color: 'rgba(180, 180, 180, 0.7)' };
+            return { ...attrs, color: 'rgba(180, 180, 180, 0.2)' };
           }
-          return attrs;
+          return { ...attrs, color: 'rgba(153, 153, 153, 1)' };
         });
+      }
+
+      renderer.on("clickNode", function (event) {
+        updateFocus(event.node);
+      });
+
+      renderer.on("enterNode", function (event) {
+        updateFocus(event.node);
       });
 
       renderer.on("leaveNode", function () {
+        activeNodes.clear();
+        renderer.setSetting("nodeReducer", null);
+        renderer.setSetting("edgeReducer", null);
+      });
+
+      renderer.on("clickStage", function () {
         activeNodes.clear();
         renderer.setSetting("nodeReducer", null);
         renderer.setSetting("edgeReducer", null);
