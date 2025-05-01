@@ -56,10 +56,8 @@
     }
 
     #gephi-container {
-      width: 60%;
-      height: 100%;
+      flex-grow: 1;
       display: none;
-      border-right: 4px solid #183524;
     }
     #gephi-container iframe {
       width: 100%;
@@ -68,8 +66,7 @@
     }
 
     #visual-content {
-      width: 100%;
-      height: 100%;
+      flex-grow: 1;
       padding: 30px;
       display: flex;
       justify-content: center;
@@ -122,17 +119,16 @@
 
       if (id === "gephi") {
         gephiContainer.style.display = "block";
-        visualContent.style.width = "40%";
-        allImgs.forEach(img => img.style.display = "none");
+        visualContent.style.display = "none";
       } else {
         gephiContainer.style.display = "none";
-        visualContent.style.width = "100%";
+        visualContent.style.display = "flex";
         allImgs.forEach(img => img.style.display = (img.id === id ? "block" : "none"));
       }
     }
 
-    // 기본: 주제 분포도
-    showViz('topics');
+    // 기본 시작 화면: 주제 분포도
+    showViz("topics");
   </script>
 </body>
 </html>
