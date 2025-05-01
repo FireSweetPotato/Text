@@ -26,9 +26,10 @@
           const renderer = new sigma.Sigma(graph, document.getElementById("container"), {{
             labelDensity: 1,
             labelGridCellSize: 20,
-            defaultNodeLabelColor: '#000',
-            labelPosition: 'center',
-            labelAlignment: 'center',
+            labelPosition: "inside",
+            labelAlignment: "center",
+            defaultNodeLabelColor: "#fff",  // 흰색 등 배경 대비 색상
+            defaultLabelSize: 14,
           }});
 
           function focusNode(nodeId) {{
