@@ -3,7 +3,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>가설공사 네트워크 시각화 (Hover & Click 강조)</title>
+    <title>가설공사 네트워크 시각화 (Hover 시만 강조, 클릭 강조 유지)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
     <style>
@@ -3189,9 +3189,9 @@ graph.addEdgeWithKey("e3029", "하부", "손등", { size: 0.047566, color: "rgba
 graph.addEdgeWithKey("e3030", "하부", "조정", { size: 0.045757, color: "rgba(153, 153, 153, 0.6)" });
 graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(153, 153, 153, 0.6)" });
 
-      let baseEdgeOpacity = 0.55;
-      let activeNode = null;
-      let activeNeighbors = new Set();
+      const baseEdgeOpacity = 0.55;
+      let clickedNode = null;
+      let clickedNeighbors = new Set();
 
       const renderer = new Sigma(graph, document.getElementById("container"), {
         labelDensity: 1,
@@ -3201,13 +3201,12 @@ graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(
         labelAlignment: 'center',
       });
 
-      function setFocus(nodeId) {
-        activeNode = nodeId;
-        activeNeighbors = new Set();
-        graph.forEachNeighbor(nodeId, (neighbor) => activeNeighbors.add(neighbor));
+      function focusNode(nodeId) {
+        const neighbors = new Set();
+        graph.forEachNeighbor(nodeId, (n) => neighbors.add(n));
 
         renderer.setSetting("nodeReducer", (n, attrs) => {
-          if (n === nodeId || activeNeighbors.has(n)) {
+          if (n === nodeId || neighbors.has(n)) {
             return attrs;
           } else {
             return { ...attrs, label: '', color: '#ccc' };
@@ -3226,32 +3225,35 @@ graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(
       }
 
       function clearFocus() {
-        activeNode = null;
-        activeNeighbors.clear();
         renderer.setSetting("nodeReducer", null);
         renderer.setSetting("edgeReducer", (e, attrs) => {
           return { ...attrs, color: `rgba(105,105,105,${baseEdgeOpacity})` };
         });
       }
 
-      // 클릭 강조 유지
-      renderer.on("clickNode", (event) => {
-        setFocus(event.node);
-      });
-
-      renderer.on("clickStage", clearFocus);
-
-      // 마우스 hover 시 일시 강조 (클릭 상태가 아닐 경우만)
       renderer.on("enterNode", (event) => {
-        if (!activeNode) {
-          setFocus(event.node);
+        if (!clickedNode) {
+          focusNode(event.node);
         }
       });
 
-      renderer.on("leaveNode", () => {
-        if (!activeNode) {
+      renderer.on("leaveNode", (event) => {
+        if (!clickedNode) {
           clearFocus();
         }
+      });
+
+      renderer.on("clickNode", (event) => {
+        clickedNode = event.node;
+        clickedNeighbors = new Set();
+        graph.forEachNeighbor(clickedNode, (n) => clickedNeighbors.add(n));
+        focusNode(clickedNode);
+      });
+
+      renderer.on("clickStage", () => {
+        clickedNode = null;
+        clickedNeighbors.clear();
+        clearFocus();
       });
     </script>
   </body>
