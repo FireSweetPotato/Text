@@ -1,30 +1,30 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>가설공사 네트워크 시각화</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
-    <style>
-      html, body { margin: 0; padding: 0; height: 100%; }
-      #container { width: 100vw; height: 100vh; background: white; }
-    </style>
-  </head>
-  <body>
-    <div id="container"></div>
-    <script>
-      window.addEventListener("DOMContentLoaded", () => {
-        const graph = new graphology.Graph();
-        const container = document.getElementById("container");
+<head>
+  <meta charset="UTF-8" />
+  <title>가설공사 네트워크 시각화</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; }
+    #container { width: 100vw; height: 100vh; background: white; }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const graph = new graphology.Graph();
+      const container = document.getElementById("container");
 
-        fetch("공종별_forceAtlas2/가설공사.txt")
-          .then(res => res.text())
-          .then(code => {
-            eval(code);  // 노드와 엣지를 삽입
+      fetch("공종별_forceAtlas2/가설공사.txt")
+        .then(res => res.text())
+        .then(code => {
+          eval(code);  // 노드 및 엣지 삽입
 
-
-            
-            const renderer = new Sigma(graph, container, {
+          // DOM이 완전히 렌더링된 이후 Sigma 생성
+          requestAnimationFrame(() => {
+            const renderer = new sigma.Sigma(graph, container, {
               labelDensity: 1,
               labelGridCellSize: 20,
               labelPosition: "inside",
@@ -35,17 +35,15 @@
 
             const baseEdgeOpacity = 0.55;
             let clickedNode = null;
-            let clickedNeighbors = new Set();
 
             function focusNode(nodeId) {
               const neighbors = new Set();
-              graph.forEachNeighbor(nodeId, (n) => neighbors.add(n));
-              renderer.setSetting("nodeReducer", (n, attrs) => {
-                return (n === nodeId || neighbors.has(n)) ? attrs : { ...attrs, label: '', color: '#ccc' };
-              });
+              graph.forEachNeighbor(nodeId, n => neighbors.add(n));
+              renderer.setSetting("nodeReducer", (n, attrs) =>
+                n === nodeId || neighbors.has(n) ? attrs : { ...attrs, label: '', color: '#ccc' });
               renderer.setSetting("edgeReducer", (e, attrs) => {
-                const source = graph.source(e), target = graph.target(e);
-                return (source === nodeId || target === nodeId)
+                const s = graph.source(e), t = graph.target(e);
+                return s === nodeId || t === nodeId
                   ? { ...attrs, color: 'rgba(105,105,105,1)' }
                   : { ...attrs, color: 'rgba(200,200,200,0.1)' };
               });
@@ -59,25 +57,23 @@
               }));
             }
 
-            renderer.on("enterNode", (e) => { if (!clickedNode) focusNode(e.node); });
+            renderer.on("enterNode", e => { if (!clickedNode) focusNode(e.node); });
             renderer.on("leaveNode", () => { if (!clickedNode) clearFocus(); });
-            renderer.on("clickNode", (e) => {
+            renderer.on("clickNode", e => {
               clickedNode = e.node;
-              clickedNeighbors = new Set();
-              graph.forEachNeighbor(clickedNode, (n) => clickedNeighbors.add(n));
               focusNode(clickedNode);
             });
             renderer.on("clickStage", () => {
               clickedNode = null;
-              clickedNeighbors.clear();
               clearFocus();
             });
-          })
-          .catch(err => {
-            console.error("스크립트 로딩 오류:", err);
-            container.innerHTML = "<h2>파일을 불러오지 못했습니다</h2>";
           });
-      });
-    </script>
-  </body>
+        })
+        .catch(err => {
+          console.error("스크립트 로딩 오류:", err);
+          container.innerHTML = "<h2>파일을 불러오지 못했습니다</h2>";
+        });
+    });
+  </script>
+</body>
 </html>
