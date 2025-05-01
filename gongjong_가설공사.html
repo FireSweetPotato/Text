@@ -1,22 +1,57 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Quick Sigma.js Example</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
-  </head>
-  <body style="background: lightgrey">
-    <div id="container" style="width: 800px; height: 600px; background: white"></div>
-    <script>
-      // Create a graphology graph
-      const graph = new graphology.Graph();
-      graph.addNode("1", { label: "Node 1", x: 0, y: 0, size: 10, color: "blue" });
-      graph.addNode("2", { label: "Node 2", x: 1, y: 1, size: 20, color: "red" });
-      graph.addEdge("1", "2", { size: 5, color: "purple" });
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>가설공사 네트워크 시각화</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
+  <style>
+    html, body { margin: 0; height: 100%; }
+    #container { width: 100vw; height: 100vh; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <script>
+    const graph = new graphology.Graph();
 
-      // Instantiate sigma.js and render the graph
-      const sigmaInstance = new Sigma(graph, document.getElementById("container"));
-    </script>
-  </body>
+    // 노드 추가
+    const nodes = [
+      { id: "설치", label: "설치", x: 291.73, y: -68.16, size: 948.15, color: "#c686e9" },
+      { id: "비계", label: "비계", x: -5246.57, y: 2132.34, size: 1000.0, color: "#c686e9" },
+      { id: "자재", label: "자재", x: -1996.66, y: 2483.02, size: 727.78, color: "#c686e9" },
+      { id: "바닥", label: "바닥", x: -10538.4, y: -9918.68, size: 792.59, color: "#00caff" },
+      { id: "이동", label: "이동", x: -4112.71, y: -2509.31, size: 896.30, color: "#c686e9" },
+      // 여기에 나머지 노드 추가
+    ];
+    nodes.forEach(n => {
+      graph.addNode(n.id, {
+        label: n.label,
+        x: n.x,
+        y: n.y,
+        size: n.size / 100,  // 시각화용 크기 보정
+        color: n.color,
+      });
+    });
+
+    // 엣지 추가
+    const edges = [
+      { source: "설치", target: "비계", weight: 1.01, color: "#999999" },
+      { source: "설치", target: "자재", weight: 0.78, color: "#999999" },
+      { source: "설치", target: "바닥", weight: 0.18, color: "#999999" },
+      { source: "설치", target: "이동", weight: 2.40, color: "#999999" },
+      // 여기에 나머지 엣지 추가
+    ];
+    edges.forEach((e, i) => {
+      graph.addEdgeWithKey(`e${i}`, e.source, e.target, {
+        size: e.weight,
+        color: e.color,
+      });
+    });
+
+    // sigma 시각화
+    const container = document.getElementById("container");
+    const renderer = new sigma.Sigma(graph, container);
+  </script>
+</body>
 </html>
