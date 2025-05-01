@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -70,6 +69,12 @@
       border-radius: 8px;
       display: none;
     }
+    #content iframe {
+      width: 100%;
+      height: 90vh;
+      min-height: 500px;
+      border: none;
+    }
   </style>
 </head>
 <body>
@@ -106,7 +111,6 @@
         item.style.display = (el === id) ? 'block' : 'none';
       });
     }
-    // 초기 로딩 시 기본값
     showViz('topics');
   </script>
 </body>
