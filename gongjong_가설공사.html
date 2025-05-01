@@ -1,79 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quick Sigma.js Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+  </head>
+  <body style="background: lightgrey">
+    <div id="container" style="width: 800px; height: 600px; background: white"></div>
+    <script>
+      // Create a graphology graph
+      const graph = new graphology.Graph();
+      graph.addNode("1", { label: "Node 1", x: 0, y: 0, size: 10, color: "blue" });
+      graph.addNode("2", { label: "Node 2", x: 1, y: 1, size: 20, color: "red" });
+      graph.addEdge("1", "2", { size: 5, color: "purple" });
 
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <title>가설공사 - Gephi 상호작용 시각화</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Noto Sans KR', sans-serif;
-    }
-    #sigma-container {
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-</head>
-<body>
-  <div id="sigma-container"></div>
-
-  <!-- 라이브러리 -->
-  <script src="https://unpkg.com/graphology@0.21.1/dist/graphology.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/graphology-gexf@0.9.1/dist/graphology-gexf.min.js"></script>
-  <script src="https://unpkg.com/sigma@2.3.0/build/sigma.min.js"></script>
-
-  <script>
-    const container = document.getElementById("sigma-container");
-
-    fetch("★최종 분석 결과★/가설공사/가설공사_gexf.gexf")
-      .then(res => res.text())
-      .then(gexf => {
-        const graph = graphologyGexf.parse(Graphology, gexf);
-        const renderer = new sigma.Sigma(graph, container);
-
-        renderer.setSetting("nodeReducer", null);
-        renderer.setSetting("edgeReducer", null);
-
-        let highlightedNodes = new Set();
-
-        renderer.on("clickNode", function (event) {
-          const nodeId = event.node;
-          highlightedNodes = new Set([nodeId]);
-
-          graph.forEachNeighbor(nodeId, function (neighbor) {
-            highlightedNodes.add(neighbor);
-          });
-
-          renderer.setSetting("nodeReducer", function (n, attrs) {
-            if (!highlightedNodes.has(n)) {
-              return { ...attrs, label: '', color: '#ccc' };
-            }
-            return attrs;
-          });
-
-          renderer.setSetting("edgeReducer", function (e, attrs) {
-            const source = graph.source(e);
-            const target = graph.target(e);
-            if (!highlightedNodes.has(source) || !highlightedNodes.has(target)) {
-              return { ...attrs, hidden: true };
-            }
-            return attrs;
-          });
-        });
-
-        renderer.on("clickStage", function () {
-          highlightedNodes.clear();
-          renderer.setSetting("nodeReducer", null);
-          renderer.setSetting("edgeReducer", null);
-        });
-      })
-      .catch(err => {
-        container.innerHTML = "<p style='color:red;text-align:center;padding:20px;'>GEXF 파일을 불러올 수 없습니다.</p>";
-        console.error(err);
-      });
-  </script>
-</body>
+      // Instantiate sigma.js and render the graph
+      const sigmaInstance = new Sigma(graph, document.getElementById("container"));
+    </script>
+  </body>
 </html>
