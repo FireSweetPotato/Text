@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>건설현장 텍스트 마이닝 분석</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #88A087;
+    }
+    header {
+      background-color: #eee;
+      padding: 10px 20px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #author {
+      color: #333;
+    }
+    #gongjong-list {
+      color: #aa0000;
+    }
+    main {
+      display: flex;
+      flex-direction: row;
+      background-color: #183524;
+      color: white;
+      height: calc(100vh - 48px);
+    }
+    #left {
+      width: 50%;
+      background: url("텍스트마이닝.png") no-repeat center center;
+      background-size: contain;
+    }
+    #right {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 32px;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .start-button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      background-color: #eee;
+      color: #183524;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .start-button:hover {
+      background-color: #ddd;
+    }
+  </style>
+  <!-- 필수 스크립트 추가 -->
+  <script src="https://unpkg.com/graphology@0.21.1/dist/graphology.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/graphology-gexf@0.9.1/dist/graphology-gexf.min.js"></script>
+  <script src="https://unpkg.com/sigma@2.3.0/build/sigma.min.js"></script>
+</head>
+<body>
+  <header>
+    <div id="author">전은록 우희민 이재영</div>
+    <div id="gongjong-list">철근콘크리트공사 가설공사 기계설비공사 해체및철거공사 토공사 철골공사</div>
+  </header>
+  <main>
+    <div id="left"></div>
+    <div id="right">
+      <h1>텍스트 마이닝을 활용한<br>건설현장의 공종별 특성 분석</h1>
+      <button class="start-button" onclick="location.href='select.html'">GET STARTED</button>
+    </div>
+  </main>
+</body>
+</html>
