@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>가설공사 시각화</title>
+  <title>철골공사 시각화</title>
   <style>
     body { margin: 0; font-family: 'Noto Sans KR', sans-serif; background-color: #183524; color: white; }
     header { display: flex; align-items: center; padding: 10px; background-color: #eee; }
@@ -23,7 +23,7 @@
     <a href="select.html"><img src="뒤로가기.png" alt="선택화면"></a>
   </header>
   <main>
-    <h1>가설공사 시각화 자료</h1>
+    <h1>철골공사 시각화 자료</h1>
     <div class="button-group">
       <button onclick="showImage('gephi')">Gephi</button>
       <button onclick="showImage('barchart')">막대 그래프</button>
@@ -33,12 +33,12 @@
       <button onclick="showImage('wordcloud')">워드클라우드</button>
     </div>
     <div class="visualization">
-      <img id="vizImage" src="★최종 분석 결과★/가설공사/가설공사_topics.png" alt="시각화 이미지">
+      <img id="vizImage" src="★최종 분석 결과★/철골공사/철골공사_topics.png" alt="시각화 이미지">
     </div>
   </main>
   <script>
     function showImage(type) {
-      const base = "★최종 분석 결과★/가설공사/가설공사_";
+      const base = "★최종 분석 결과★/철골공사/철골공사_";
       const suffix = {
         gephi: "gephi.png",
         barchart: "barchart.png",
