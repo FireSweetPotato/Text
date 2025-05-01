@@ -54,26 +54,15 @@
     #sidebar button:hover {
       background-color: #90a590;
     }
-
-    #gephi-container {
+    #content {
       flex-grow: 1;
-      display: none;
-    }
-    #gephi-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    #visual-content {
-      flex-grow: 1;
-      padding: 30px;
+      background-color: #e8eee7;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #e8eee7;
+      padding: 30px;
     }
-    #visual-content img {
+    #content img {
       max-width: 100%;
       max-height: 90%;
       border-radius: 8px;
@@ -91,19 +80,14 @@
   </header>
   <main>
     <div id="sidebar">
-      <button onclick="showViz('gephi')">Gephi</button>
+      <button onclick="location.href='gongjong_가설공사_gephi.html'">Gephi</button>
       <button onclick="showViz('barchart')">막대 그래프</button>
       <button onclick="showViz('heatmap')">히트맵</button>
       <button onclick="showViz('topics')">주제 분포도</button>
       <button onclick="showViz('hierarchy')">주제 계층도</button>
       <button onclick="showViz('wordcloud')">워드클라우드</button>
     </div>
-
-    <div id="gephi-container">
-      <iframe id="gephi" src="gongjong_가설공사_gephi.html"></iframe>
-    </div>
-
-    <div id="visual-content">
+    <div id="content">
       <img id="barchart" src="★최종 분석 결과★/가설공사/가설공사_barchart.png" alt="막대 그래프">
       <img id="heatmap" src="★최종 분석 결과★/가설공사/가설공사_heatmap.png" alt="히트맵">
       <img id="topics" src="★최종 분석 결과★/가설공사/가설공사_topics.png" alt="주제 분포도">
@@ -113,22 +97,19 @@
   </main>
   <script>
     function showViz(id) {
-      const gephiContainer = document.getElementById("gephi-container");
-      const visualContent = document.getElementById("visual-content");
-      const allImgs = visualContent.querySelectorAll("img");
-
-      if (id === "gephi") {
-        gephiContainer.style.display = "block";
-        visualContent.style.display = "none";
-      } else {
-        gephiContainer.style.display = "none";
-        visualContent.style.display = "flex";
-        allImgs.forEach(img => img.style.display = (img.id === id ? "block" : "none"));
+      if (id === 'gephi') {
+        location.href = 'gongjong_가설공사_gephi.html';
+        return;
       }
+
+      const all = ['barchart', 'heatmap', 'topics', 'hierarchy', 'wordcloud'];
+      all.forEach(el => {
+        const item = document.getElementById(el);
+        item.style.display = (el === id) ? 'block' : 'none';
+      });
     }
 
-    // 기본 시작 화면: 주제 분포도
-    showViz("topics");
+    showViz('topics');
   </script>
 </body>
 </html>
