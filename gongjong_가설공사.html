@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -16,19 +17,16 @@
       font-weight: bold;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
     }
     header img {
-      height: 30px;
+      height: 36px; /* 기존보다 20% 크게 */
       margin-right: 10px;
       cursor: pointer;
     }
-    header div {
-      display: flex;
-      align-items: center;
-    }
     h1 {
       font-size: 24px;
+      text-align: center;
     }
     main {
       display: flex;
@@ -72,9 +70,7 @@
 </head>
 <body>
   <header>
-    <div>
-      <a href="index.html"><img src="홈버튼.png" alt="홈"></a>
-    </div>
+    <a href="index.html"><img src="홈버튼.png" alt="홈"></a>
     <h1>가설공사</h1>
   </header>
   <main>
@@ -96,6 +92,11 @@
   </main>
   <script>
     function showViz(id) {
+      if (id === 'gephi') {
+        location.href = 'gongjong_가설공사_gephi.html';
+        return;
+      }
+
       const all = ['barchart', 'heatmap', 'topics', 'hierarchy', 'wordcloud'];
       all.forEach(el => {
         const item = document.getElementById(el);
@@ -103,7 +104,7 @@
       });
     }
 
-    showViz('topics'); // 기본 표시 그래프
+    showViz('topics');
   </script>
 </body>
 </html>
