@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>철근콘크리트공사 시각화</title>
+  <style>
+    body { margin: 0; font-family: 'Noto Sans KR', sans-serif; background-color: #183524; color: white; }
+    header { display: flex; align-items: center; padding: 10px; background-color: #eee; }
+    header img { height: 30px; margin-right: 10px; cursor: pointer; }
+    main { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+    .button-group { margin: 20px 0; }
+    .button-group button { margin: 0 8px; padding: 10px 18px; font-size: 16px; border: none; border-radius: 6px;
+                           background-color: #eee; color: #183524; cursor: pointer; }
+    .button-group button:hover { background-color: #ccc; }
+    .visualization { margin-top: 20px; max-width: 90%; max-height: 600px; }
+    .visualization img { width: 100%; height: auto; border: 2px solid #eee; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="홈버튼.png" alt="홈으로"></a>
+    <a href="select.html"><img src="뒤로가기.png" alt="선택화면"></a>
+  </header>
+  <main>
+    <h1>철근콘크리트공사 시각화 자료</h1>
+    <div class="button-group">
+      <button onclick="showImage('gephi')">Gephi</button>
+      <button onclick="showImage('barchart')">막대 그래프</button>
+      <button onclick="showImage('heatmap')">히트맵</button>
+      <button onclick="showImage('topics')">주제 분포도</button>
+      <button onclick="showImage('hierarchy')">주제 계층도</button>
+      <button onclick="showImage('wordcloud')">워드클라우드</button>
+    </div>
+    <div class="visualization">
+      <img id="vizImage" src="★최종 분석 결과★/철근콘크리트공사/철근콘크리트공사_topics.png" alt="시각화 이미지">
+    </div>
+  </main>
+  <script>
+    function showImage(type) {
+      const base = "★최종 분석 결과★/철근콘크리트공사/철근콘크리트공사_";
+      const suffix = {
+        gephi: "gephi.png",
+        barchart: "barchart.png",
+        heatmap: "heatmap.png",
+        topics: "topics.png",
+        hierarchy: "hierarchy.png",
+        wordcloud: "wordcloud.png"
+      };
+      document.getElementById("vizImage").src = base + suffix[type];
+    }
+  </script>
+</body>
+</html>
