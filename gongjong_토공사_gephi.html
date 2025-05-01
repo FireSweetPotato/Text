@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>가설공사 네트워크 시각화 (Hover 시만 강조, 클릭 강조 유지)</title>
+    <title>토공사 네트워크 시각화 (Hover 시만 강조, 클릭 강조 유지)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
     <style>
@@ -19,7 +19,7 @@
       let clickedNeighbors = new Set();
 
       // 외부 .txt 파일에서 노드 및 엣지 삽입 스크립트 가져오기
-      fetch('공종별_forceAtlas2/가설공사_forceAtlas2.txt')
+      fetch('공종별_forceAtlas2/토공사_forceAtlas2.txt')
         .then(res => res.text())
         .then(code => {{
           eval(code);  // 노드와 엣지를 graph에 추가
