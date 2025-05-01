@@ -1,152 +1,158 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>Quick Sigma.js Example</title>
+    <title>가설공사 네트워크 시각화</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+    <style>
+      html, body { margin: 0; height: 100%; }
+      #container { width: 100vw; height: 100vh; background: white; }
+    </style>
   </head>
-  <body style="background: lightgrey">
-    <div id="container" style="width: 800px; height: 600px; background: white"></div>
+  <body>
+    <div id="container"></div>
     <script>
-      // Create a graphology graph
       const graph = new graphology.Graph();
-      graph.addNode("설치", { label: "설치", x: 0.3952665501150756, y: -0.7226743879574977, size: 10, color: "#c686e9" });
-graph.addNode("비계", { label: "비계", x: -0.14218112316211484, y: 0.07488341100019502, size: 10, color: "#c686e9" });
-graph.addNode("자재", { label: "자재", x: 0.7203237462368344, y: -0.9756869227604459, size: 10, color: "#c686e9" });
-graph.addNode("바닥", { label: "바닥", x: -0.47772814282272513, y: -0.18629115493586057, size: 10, color: "#00caff" });
-graph.addNode("이동", { label: "이동", x: 0.29408345608639364, y: 0.7559515470945526, size: 10, color: "#c686e9" });
-graph.addNode("거푸집", { label: "거푸집", x: -0.41061322839581393, y: 0.03832812794583984, size: 10, color: "#c686e9" });
-graph.addNode("추락", { label: "추락", x: 0.037846906804093416, y: 0.5417214700641217, size: 10, color: "#ea8615" });
-graph.addNode("작업중", { label: "작업중", x: -0.5971973815728502, y: 0.19580361604511132, size: 10, color: "#c686e9" });
-graph.addNode("안전", { label: "안전", x: -0.9818817617813382, y: -0.7489603502756623, size: 10, color: "#c686e9" });
-graph.addNode("발판", { label: "발판", x: -0.18706795499005668, y: 0.19845042749491504, size: 10, color: "#c686e9" });
-graph.addNode("사다리", { label: "사다리", x: -0.06196607945437682, y: -0.5116538415256058, size: 10, color: "#ea8615" });
-graph.addNode("상태", { label: "상태", x: 0.47039568098043216, y: 0.34595943784264693, size: 10, color: "#ff5c81" });
-graph.addNode("계단", { label: "계단", x: -0.8307879459071723, y: 0.0645815681383275, size: 10, color: "#00caff" });
-graph.addNode("손가락", { label: "손가락", x: -0.853698702448894, y: 0.6640968452340483, size: 10, color: "#c686e9" });
-graph.addNode("미흡", { label: "미흡", x: -0.4820006339167664, y: 0.7528681708324922, size: 10, color: "#00caff" });
-graph.addNode("고정", { label: "고정", x: -0.9530792228817688, y: 0.026366328486893353, size: 10, color: "#ea8615" });
-graph.addNode("체결", { label: "체결", x: -0.5598869135809899, y: -0.07657955611040324, size: 10, color: "#c686e9" });
-graph.addNode("고리", { label: "고리", x: -0.5971276605186886, y: 0.00644830829060794, size: 10, color: "#c686e9" });
-graph.addNode("운전", { label: "운전", x: 0.1506006605920207, y: -0.544926164582292, size: 10, color: "#2e9072" });
-graph.addNode("안전교육", { label: "안전교육", x: 0.0022509473289960003, y: 0.5229124549956623, size: 10, color: "#c686e9" });
-graph.addNode("안전벨트", { label: "안전벨트", x: -0.7722794904400987, y: 0.06938318726282078, size: 10, color: "#c686e9" });
-graph.addNode("부족", { label: "부족", x: -0.7590993276971847, y: -0.17733530168218437, size: 10, color: "#ea8615" });
-graph.addNode("부주의", { label: "부주의", x: -0.7813718889480361, y: 0.8241616671346577, size: 10, color: "#00caff" });
-graph.addNode("운반", { label: "운반", x: 0.23297359988769228, y: -0.19958711673664808, size: 10, color: "#c686e9" });
-graph.addNode("사용", { label: "사용", x: -0.14138433073557377, y: 0.416434825690444, size: 10, color: "#c686e9" });
-graph.addNode("시스템", { label: "시스템", x: 0.929837638729615, y: -0.7594847249597594, size: 10, color: "#c686e9" });
-graph.addNode("동바리", { label: "동바리", x: -0.030645648833248718, y: -0.2598181382166542, size: 10, color: "#c686e9" });
-graph.addNode("외부", { label: "외부", x: 0.771845285020117, y: -0.04903401759467907, size: 10, color: "#c686e9" });
-graph.addNode("정리", { label: "정리", x: 0.2541318564170232, y: -0.9096996845261256, size: 10, color: "#c686e9" });
-graph.addNode("발목", { label: "발목", x: -0.6443097977380914, y: 0.17741410532016655, size: 10, color: "#c686e9" });
-graph.addNode("왼쪽", { label: "왼쪽", x: 0.6772015186018856, y: -0.4887713959839879, size: 10, color: "#c686e9" });
-graph.addNode("우측", { label: "우측", x: -0.8747451475165833, y: 0.01974274714354296, size: 10, color: "#c686e9" });
-graph.addNode("목재", { label: "목재", x: 0.4453693119493638, y: -0.3986921231880334, size: 10, color: "#c686e9" });
-graph.addNode("부상", { label: "부상", x: 0.4820258607183321, y: 0.6865968940834479, size: 10, color: "#c686e9" });
-graph.addNode("좌측", { label: "좌측", x: -0.8858721480493239, y: -0.9460220596074858, size: 10, color: "#c686e9" });
-graph.addNode("무릎", { label: "무릎", x: -0.12702775010244505, y: -0.4618588928552041, size: 10, color: "#c686e9" });
-graph.addNode("부분", { label: "부분", x: 0.12502968922483793, y: 0.9673585226725974, size: 10, color: "#c686e9" });
-graph.addNode("장비", { label: "장비", x: -0.04294336552594569, y: 0.9040944182828092, size: 10, color: "#5fc613" });
-graph.addNode("위치", { label: "위치", x: 0.4320689927924277, y: -0.7849881680516315, size: 10, color: "#2e9072" });
-graph.addNode("사이", { label: "사이", x: -0.5711652531216704, y: 0.8900302538489713, size: 10, color: "#c686e9" });
-graph.addNode("끼임", { label: "끼임", x: -0.3443080843284909, y: -0.9281933661615436, size: 10, color: "#c686e9" });
-graph.addNode("타격", { label: "타격", x: -0.861920334597748, y: -0.34803737638705656, size: 10, color: "#c686e9" });
-graph.addNode("흙막이", { label: "흙막이", x: -0.2741489277863267, y: -0.13811548589088285, size: 10, color: "#5fc613" });
-graph.addNode("토류판", { label: "토류판", x: -0.491085356017785, y: -0.15874097280406008, size: 10, color: "#5fc613" });
-graph.addNode("가시", { label: "가시", x: 0.3439528196846775, y: 0.7469421573218245, size: 10, color: "#5fc613" });
-graph.addNode("굴착", { label: "굴착", x: 0.2050428252857175, y: -0.26212539657140654, size: 10, color: "#5fc613" });
-graph.addNode("토사", { label: "토사", x: -0.6156821149944731, y: 0.17722102031490117, size: 10, color: "#5fc613" });
-graph.addNode("간이", { label: "간이", x: 0.9333384350950156, y: 0.33221630106648425, size: 10, color: "#5fc613" });
-graph.addNode("진흙", { label: "진흙", x: 0.5516715320895766, y: -0.9043845349814186, size: 10, color: "#5fc613" });
-graph.addNode("상부", { label: "상부", x: 0.5162877724223001, y: 0.7079231588740935, size: 10, color: "#c686e9" });
-graph.addNode("추락사고", { label: "추락사고", x: -0.05990190092314207, y: -0.11493483464338183, size: 10, color: "#c686e9" });
-graph.addNode("충돌", { label: "충돌", x: -0.3367764907180091, y: 0.6822929763836529, size: 10, color: "#c686e9" });
-graph.addNode("굴착기", { label: "굴착기", x: -0.2998294672226687, y: 0.942143538700269, size: 10, color: "#5fc613" });
-graph.addNode("결속", { label: "결속", x: -0.18073278978165264, y: 0.44613951904820315, size: 10, color: "#c686e9" });
-graph.addNode("철골빔", { label: "철골빔", x: -0.48255937549524663, y: 0.2737605962992422, size: 10, color: "#ff5c81" });
-graph.addNode("시야", { label: "시야", x: 0.7125338795753258, y: -0.1749858464124905, size: 10, color: "#c686e9" });
-graph.addNode("구간", { label: "구간", x: 0.3170926939713137, y: -0.013383049374893874, size: 10, color: "#00caff" });
-graph.addNode("복구", { label: "복구", x: -0.5528162836788035, y: -0.7919526376533006, size: 10, color: "#00caff" });
-graph.addNode("적재", { label: "적재", x: 0.3902132900877271, y: 0.44128248905661316, size: 10, color: "#c686e9" });
-graph.addNode("하부", { label: "하부", x: 0.3683803438724407, y: -0.7754201949759156, size: 10, color: "#2e9072" });
-graph.addNode("공구", { label: "공구", x: -0.8064189166763396, y: 0.9822538839166721, size: 10, color: "#ea8615" });
-graph.addNode("철근", { label: "철근", x: 0.13520730970911843, y: 0.08581502315775724, size: 10, color: "#ea8615" });
-graph.addNode("골절", { label: "골절", x: -0.7106107658013523, y: -0.7790322207176263, size: 10, color: "#c686e9" });
-graph.addNode("통증", { label: "통증", x: -0.43253708175712813, y: -0.3506633262613761, size: 10, color: "#c686e9" });
-graph.addNode("근로자", { label: "근로자", x: -0.8574360933303689, y: 0.16568690483230042, size: 10, color: "#00caff" });
-graph.addNode("전달", { label: "전달", x: 0.3394401575683894, y: 0.7782578135140907, size: 10, color: "#2e9072" });
-graph.addNode("주변", { label: "주변", x: 0.2784234317689658, y: 0.2912601027289763, size: 10, color: "#5fc613" });
-graph.addNode("엄지손가락", { label: "엄지손가락", x: -0.8501535789892074, y: 0.12897486243489076, size: 10, color: "#c686e9" });
-graph.addNode("이동식", { label: "이동식", x: -0.5796485543288639, y: 0.16283457094669518, size: 10, color: "#ea8615" });
-graph.addNode("헛딛임", { label: "헛딛임", x: -0.8942496783150613, y: -0.48080754086162214, size: 10, color: "#ea8615" });
-graph.addNode("장위", { label: "장위", x: 0.5372618400542788, y: -0.8118624758879387, size: 10, color: "#ea8615" });
-graph.addNode("겨낭줄", { label: "겨낭줄", x: -0.0036378287125142794, y: -0.25273948535769963, size: 10, color: "#ea8615" });
-graph.addNode("횡재", { label: "횡재", x: -0.9642098721281291, y: 0.593219389138423, size: 10, color: "#ea8615" });
-graph.addNode("실선", { label: "실선", x: -0.5713373025039996, y: 0.00643273110529452, size: 10, color: "#ea8615" });
-graph.addNode("조금", { label: "조금", x: 0.8655794706979794, y: 0.6055686586293629, size: 10, color: "#ea8615" });
-graph.addNode("이끼", { label: "이끼", x: 0.2736705437828175, y: -0.21679478604975477, size: 10, color: "#ea8615" });
-graph.addNode("우마", { label: "우마", x: 0.9822127411716344, y: 0.8894866852226562, size: 10, color: "#c686e9" });
-graph.addNode("정리정돈", { label: "정리정돈", x: 0.8437385596133236, y: -0.2309512397431055, size: 10, color: "#c686e9" });
-graph.addNode("원상", { label: "원상", x: 0.5180161345454664, y: 0.9904561547078772, size: 10, color: "#c686e9" });
-graph.addNode("중량", { label: "중량", x: -0.8996250184344095, y: 0.23450236843584915, size: 10, color: "#5fc613" });
-graph.addNode("가설", { label: "가설", x: -0.3170448765808398, y: 0.30926788633997426, size: 10, color: "#00caff" });
-graph.addNode("자의", { label: "자의", x: 0.8553624210219628, y: 0.5759604762673551, size: 10, color: "#00caff" });
-graph.addNode("단순", { label: "단순", x: 0.43299952861013047, y: -0.6396326937693362, size: 10, color: "#00caff" });
-graph.addNode("과실", { label: "과실", x: 0.21235979366955804, y: -0.37636321355452607, size: 10, color: "#00caff" });
-graph.addNode("협소", { label: "협소", x: 0.25451597962734684, y: 0.5242372084305182, size: 10, color: "#00caff" });
-graph.addNode("복공", { label: "복공", x: 0.6606419111125841, y: -0.8741435455704156, size: 10, color: "#00caff" });
-graph.addNode("하층", { label: "하층", x: -0.2899587185348853, y: 0.5264843163048645, size: 10, color: "#2e9072" });
-graph.addNode("얼굴", { label: "얼굴", x: -0.5045434521023606, y: 0.8036498598758828, size: 10, color: "#2e9072" });
-graph.addNode("불안전", { label: "불안전", x: -0.6697929018477047, y: -0.19902700127645812, size: 10, color: "#00caff" });
-graph.addNode("행동", { label: "행동", x: -0.3556685169671292, y: -0.6763996936854344, size: 10, color: "#00caff" });
-graph.addNode("간의", { label: "간의", x: -0.8817124163486738, y: 0.46797662623440317, size: 10, color: "#5fc613" });
-graph.addNode("대차", { label: "대차", x: -0.4184362481563493, y: -0.7276289401598193, size: 10, color: "#00caff" });
-graph.addNode("다림", { label: "다림", x: -0.2885377693935214, y: 0.2533624191397146, size: 10, color: "#00caff" });
-graph.addNode("방법", { label: "방법", x: -0.45842908026677187, y: 0.3819275706345511, size: 10, color: "#00caff" });
-graph.addNode("포트", { label: "포트", x: -0.210849116458115, y: -0.9902344349426986, size: 10, color: "#2e9072" });
-graph.addNode("드롭", { label: "드롭", x: -0.48346927585723476, y: 0.3820696554313201, size: 10, color: "#2e9072" });
-graph.addNode("패널", { label: "패널", x: 0.6194308714758097, y: -0.4301848716939558, size: 10, color: "#2e9072" });
-graph.addNode("손등", { label: "손등", x: 0.0993446541569123, y: -0.6387244859695245, size: 10, color: "#2e9072" });
-graph.addNode("조정", { label: "조정", x: 0.27782359324667705, y: -0.9035010802574377, size: 10, color: "#2e9072" });
-graph.addNode("손위", { label: "손위", x: 0.27073833763066046, y: 0.2556758236791039, size: 10, color: "#2e9072" });
-graph.addNode("자세", { label: "자세", x: 0.037108326385375756, y: 0.23999038023835295, size: 10, color: "#00caff" });
-graph.addNode("실족", { label: "실족", x: -0.41105393590415873, y: -0.8194853799564406, size: 10, color: "#00caff" });
-graph.addNode("개인", { label: "개인", x: -0.023619019629465, y: 0.45294907069608903, size: 10, color: "#00caff" });
-graph.addNode("불량", { label: "불량", x: 0.42689804716616186, y: 0.6688927054805265, size: 10, color: "#00caff" });
-graph.addNode("의견", { label: "의견", x: -0.187018340686945, y: -0.35417433029442646, size: 10, color: "#00caff" });
-graph.addNode("실수", { label: "실수", x: -0.4630004641025991, y: -0.7901175898425741, size: 10, color: "#00caff" });
-graph.addNode("용접", { label: "용접", x: -0.43014278380019144, y: -0.11341717792812012, size: 10, color: "#ff5c81" });
-graph.addNode("위험", { label: "위험", x: -0.2666172311123549, y: -0.40213830881374113, size: 10, color: "#5fc613" });
-graph.addNode("물이", { label: "물이", x: -0.5880271821098704, y: 0.48047711377027946, size: 10, color: "#5fc613" });
-graph.addNode("산소", { label: "산소", x: -0.8275133691803114, y: -0.26257716003059306, size: 10, color: "#ff5c81" });
-graph.addNode("절단", { label: "절단", x: 0.7600195303148574, y: -0.3655538990338114, size: 10, color: "#ff5c81" });
-graph.addNode("단기", { label: "단기", x: -0.8664683753124638, y: -0.4069715365042703, size: 10, color: "#ff5c81" });
-graph.addNode("화상", { label: "화상", x: -0.916007518297574, y: -0.5819148874284876, size: 10, color: "#ff5c81" });
-graph.addNode("호스", { label: "호스", x: 0.8852143246420461, y: -0.9536735005258856, size: 10, color: "#ff5c81" });
-graph.addNode("용단", { label: "용단", x: -0.04709861170748586, y: -0.8117999411838357, size: 10, color: "#ff5c81" });
-graph.addNode("연료", { label: "연료", x: -0.714266985626417, y: -0.9425499371025226, size: 10, color: "#ff5c81" });
-graph.addNode("치의", { label: "치의", x: 0.4404355517192524, y: -0.3112547778051775, size: 10, color: "#ff5c81" });
-graph.addNode("본인", { label: "본인", x: -0.7326362401260333, y: -0.45306235571471065, size: 10, color: "#00caff" });
-graph.addNode("인력", { label: "인력", x: -0.25764433070819437, y: -0.6497999664008236, size: 10, color: "#5fc613" });
-graph.addNode("미숙", { label: "미숙", x: -0.43118833829550574, y: 0.3120147854080262, size: 10, color: "#00caff" });
-graph.addNode("신호", { label: "신호", x: 0.28071689317128157, y: 0.12955046533264802, size: 10, color: "#5fc613" });
-graph.addNode("체계", { label: "체계", x: 0.45153664099708424, y: -0.1673947096125643, size: 10, color: "#5fc613" });
-graph.addNode("요소", { label: "요소", x: 0.9176246317041659, y: 0.6352123853547678, size: 10, color: "#5fc613" });
-graph.addNode("인조", { label: "인조", x: 0.9965250759661584, y: 0.968910730326537, size: 10, color: "#5fc613" });
-graph.addNode("형강", { label: "형강", x: -0.27519865404099497, y: 0.5399412142506881, size: 10, color: "#5fc613" });
-graph.addNode("의사소통", { label: "의사소통", x: -0.7277740138838045, y: 0.7772441578898464, size: 10, color: "#5fc613" });
-graph.addNode("일치", { label: "일치", x: 0.3771167511155098, y: 0.4360960121317625, size: 10, color: "#5fc613" });
-graph.addNode("자간", { label: "자간", x: -0.3613392619674718, y: 0.500768763230375, size: 10, color: "#5fc613" });
-graph.addNode("기사", { label: "기사", x: -0.5643786824715227, y: -0.6912818792821234, size: 10, color: "#5fc613" });
-graph.addNode("상호", { label: "상호", x: 0.03883686502712269, y: -0.7632412272034317, size: 10, color: "#5fc613" });
-graph.addNode("제때", { label: "제때", x: -0.7965377283972148, y: 0.13756670235575008, size: 10, color: "#5fc613" });
-graph.addNode("관계", { label: "관계", x: -0.7030422946169816, y: 0.6815610703745998, size: 10, color: "#5fc613" });
-graph.addNode("호수", { label: "호수", x: -0.8099162938580022, y: -0.5510078163261094, size: 10, color: "#5fc613" });
-graph.addNode("배치", { label: "배치", x: 0.800195989402255, y: 0.4946179091836074, size: 10, color: "#5fc613" });
-graph.addNode("양수기", { label: "양수기", x: -0.7609334332224069, y: -0.6832548272632581, size: 10, color: "#5fc613" });
-graph.addNode("콘크리트", { label: "콘크리트", x: 0.23154689968276365, y: 0.8892894684521169, size: 10, color: "#5fc613" });
+
+      // --- 생략: 너가 작성한 노드 및 엣지 삽입 코드가 이곳에 들어간다고 가정함 ---
+      // 예시:
+graph.addNode("설치", { label: "설치", x: 0.7233553627892941, y: 0.6219027700319137, size: 10, color: "#c686e9" });
+graph.addNode("비계", { label: "비계", x: 0.8821160236359566, y: 0.0019956067910078534, size: 10, color: "#c686e9" });
+graph.addNode("자재", { label: "자재", x: 0.6935920115471508, y: 0.2894428076374489, size: 10, color: "#c686e9" });
+graph.addNode("바닥", { label: "바닥", x: -0.2940552000718113, y: -0.5470549499443229, size: 10, color: "#00caff" });
+graph.addNode("이동", { label: "이동", x: -0.9740931838245821, y: 0.9404414112442765, size: 10, color: "#c686e9" });
+graph.addNode("거푸집", { label: "거푸집", x: 0.9319220229718861, y: -0.4310477195491518, size: 10, color: "#c686e9" });
+graph.addNode("추락", { label: "추락", x: -0.9090541538679138, y: -0.9038715207824846, size: 10, color: "#ea8615" });
+graph.addNode("작업중", { label: "작업중", x: 0.3032817160328334, y: -0.9164622856068103, size: 10, color: "#c686e9" });
+graph.addNode("안전", { label: "안전", x: -0.09052510541498071, y: -0.020123548634056743, size: 10, color: "#c686e9" });
+graph.addNode("발판", { label: "발판", x: 0.09356180484573251, y: 0.4747124700845651, size: 10, color: "#c686e9" });
+graph.addNode("사다리", { label: "사다리", x: -0.15073764077248275, y: -0.16584950910023766, size: 10, color: "#ea8615" });
+graph.addNode("상태", { label: "상태", x: 0.08094105631099424, y: -0.030229428232935618, size: 10, color: "#ff5c81" });
+graph.addNode("계단", { label: "계단", x: 0.9963550921360325, y: -0.7391133525951767, size: 10, color: "#00caff" });
+graph.addNode("손가락", { label: "손가락", x: 0.40898112933542574, y: 0.7576413668679445, size: 10, color: "#c686e9" });
+graph.addNode("미흡", { label: "미흡", x: 0.11972613525191012, y: -0.4019085087483871, size: 10, color: "#00caff" });
+graph.addNode("고정", { label: "고정", x: 0.09911368631181694, y: -0.6915328335140172, size: 10, color: "#ea8615" });
+graph.addNode("체결", { label: "체결", x: 0.824614182964363, y: 0.6312081556528606, size: 10, color: "#c686e9" });
+graph.addNode("고리", { label: "고리", x: 0.9280064823058778, y: 0.6198442091399863, size: 10, color: "#c686e9" });
+graph.addNode("운전", { label: "운전", x: -0.8878683995842658, y: -0.8153239430976003, size: 10, color: "#2e9072" });
+graph.addNode("안전교육", { label: "안전교육", x: -0.8493398048421716, y: -0.941387860296081, size: 10, color: "#c686e9" });
+graph.addNode("안전벨트", { label: "안전벨트", x: 0.35876651409351035, y: 0.9165047483440376, size: 10, color: "#c686e9" });
+graph.addNode("부족", { label: "부족", x: 0.8608843346297859, y: -0.8635921696578956, size: 10, color: "#ea8615" });
+graph.addNode("부주의", { label: "부주의", x: -0.8542754999112521, y: 0.98400876001898, size: 10, color: "#00caff" });
+graph.addNode("운반", { label: "운반", x: 0.3579980738017021, y: -0.9434115226644391, size: 10, color: "#c686e9" });
+graph.addNode("사용", { label: "사용", x: 0.8735939159920654, y: -0.29496711165631306, size: 10, color: "#c686e9" });
+graph.addNode("시스템", { label: "시스템", x: 0.6939533340624511, y: 0.3816681000460129, size: 10, color: "#c686e9" });
+graph.addNode("동바리", { label: "동바리", x: -0.8962957967822027, y: 0.18598671023544688, size: 10, color: "#c686e9" });
+graph.addNode("외부", { label: "외부", x: -0.6950546372074868, y: 0.6771950242570237, size: 10, color: "#c686e9" });
+graph.addNode("정리", { label: "정리", x: -0.22176682487447552, y: 0.06822935151143605, size: 10, color: "#c686e9" });
+graph.addNode("발목", { label: "발목", x: 0.9400890397519759, y: 0.021331452320017874, size: 10, color: "#c686e9" });
+graph.addNode("왼쪽", { label: "왼쪽", x: -0.34924117383700537, y: -0.3254755257316684, size: 10, color: "#c686e9" });
+graph.addNode("우측", { label: "우측", x: -0.8139322903825772, y: 0.7280659732111332, size: 10, color: "#c686e9" });
+graph.addNode("목재", { label: "목재", x: 0.6069101306858167, y: -0.7383642945688598, size: 10, color: "#c686e9" });
+graph.addNode("부상", { label: "부상", x: -0.4041156873760563, y: 0.0717819262590631, size: 10, color: "#c686e9" });
+graph.addNode("좌측", { label: "좌측", x: -0.6011283458448733, y: 0.12082419974280811, size: 10, color: "#c686e9" });
+graph.addNode("무릎", { label: "무릎", x: -0.1756206845430195, y: 0.9164535083514092, size: 10, color: "#c686e9" });
+graph.addNode("부분", { label: "부분", x: -0.523735677484757, y: -0.8315220400014127, size: 10, color: "#c686e9" });
+graph.addNode("장비", { label: "장비", x: 0.2981196768230976, y: -0.9117719141434075, size: 10, color: "#5fc613" });
+graph.addNode("위치", { label: "위치", x: 0.12835162487988283, y: -0.2781480833806875, size: 10, color: "#2e9072" });
+graph.addNode("사이", { label: "사이", x: -0.09859538692349767, y: 0.5909367955304468, size: 10, color: "#c686e9" });
+graph.addNode("끼임", { label: "끼임", x: 0.6900132390289964, y: 0.5095186629286492, size: 10, color: "#c686e9" });
+graph.addNode("타격", { label: "타격", x: 0.9721747139208776, y: -0.24574240438645734, size: 10, color: "#c686e9" });
+graph.addNode("흙막이", { label: "흙막이", x: -0.5388507486377245, y: -0.99107049975415, size: 10, color: "#5fc613" });
+graph.addNode("토류판", { label: "토류판", x: 0.41000688815425357, y: -0.01915072110996463, size: 10, color: "#5fc613" });
+graph.addNode("가시", { label: "가시", x: -0.995221715691575, y: 0.44776598460965156, size: 10, color: "#5fc613" });
+graph.addNode("굴착", { label: "굴착", x: -0.8297120013769617, y: 0.725192875391526, size: 10, color: "#5fc613" });
+graph.addNode("토사", { label: "토사", x: 0.5262062915979004, y: 0.9243284698198866, size: 10, color: "#5fc613" });
+graph.addNode("간이", { label: "간이", x: 0.11181003721090232, y: -0.5404771654146021, size: 10, color: "#5fc613" });
+graph.addNode("진흙", { label: "진흙", x: -0.8941207867478966, y: 0.20968309848581934, size: 10, color: "#5fc613" });
+graph.addNode("상부", { label: "상부", x: 0.4557931040835239, y: 0.49016111283188124, size: 10, color: "#c686e9" });
+graph.addNode("추락사고", { label: "추락사고", x: 0.48202936119937423, y: 0.45072316950666047, size: 10, color: "#c686e9" });
+graph.addNode("충돌", { label: "충돌", x: -0.16739208067497424, y: 0.3813189600455047, size: 10, color: "#c686e9" });
+graph.addNode("굴착기", { label: "굴착기", x: -0.75130698964669, y: 0.282674164177684, size: 10, color: "#5fc613" });
+graph.addNode("결속", { label: "결속", x: 0.32531235286391214, y: 0.9762302683602402, size: 10, color: "#c686e9" });
+graph.addNode("철골빔", { label: "철골빔", x: 0.725389589047166, y: 0.8381398361186474, size: 10, color: "#ff5c81" });
+graph.addNode("시야", { label: "시야", x: 0.13296654732059743, y: -0.34882828521984166, size: 10, color: "#c686e9" });
+graph.addNode("구간", { label: "구간", x: 0.2116938144180307, y: -0.7714608601818809, size: 10, color: "#00caff" });
+graph.addNode("복구", { label: "복구", x: -0.925859562750275, y: -0.8041527764723087, size: 10, color: "#00caff" });
+graph.addNode("적재", { label: "적재", x: 0.5581159459362852, y: 0.5491776830055086, size: 10, color: "#c686e9" });
+graph.addNode("하부", { label: "하부", x: 0.39087504096248793, y: -0.6373399052261142, size: 10, color: "#2e9072" });
+graph.addNode("공구", { label: "공구", x: -0.372838162752827, y: 0.9866599879800955, size: 10, color: "#ea8615" });
+graph.addNode("철근", { label: "철근", x: 0.7299487205311384, y: 0.08285823224108535, size: 10, color: "#ea8615" });
+graph.addNode("골절", { label: "골절", x: -0.7412361352040577, y: -0.6895822897636781, size: 10, color: "#c686e9" });
+graph.addNode("통증", { label: "통증", x: 0.674021322797256, y: 0.7620000318513698, size: 10, color: "#c686e9" });
+graph.addNode("근로자", { label: "근로자", x: -0.4262841363110761, y: -0.8270445611828663, size: 10, color: "#00caff" });
+graph.addNode("전달", { label: "전달", x: -0.524481214203389, y: -0.2280509084117186, size: 10, color: "#2e9072" });
+graph.addNode("주변", { label: "주변", x: 0.515655150201517, y: 0.7922770215620056, size: 10, color: "#5fc613" });
+graph.addNode("엄지손가락", { label: "엄지손가락", x: 0.3640973367764335, y: -0.5957672775382581, size: 10, color: "#c686e9" });
+graph.addNode("이동식", { label: "이동식", x: 0.6262694028158289, y: -0.4505933809925282, size: 10, color: "#ea8615" });
+graph.addNode("헛딛임", { label: "헛딛임", x: 0.04012140883291604, y: -0.16855362600406143, size: 10, color: "#ea8615" });
+graph.addNode("장위", { label: "장위", x: 0.8646138279459854, y: 0.008413545078600704, size: 10, color: "#ea8615" });
+graph.addNode("겨낭줄", { label: "겨낭줄", x: -0.15308084387079623, y: -0.15284481056114152, size: 10, color: "#ea8615" });
+graph.addNode("횡재", { label: "횡재", x: 0.7966940209475055, y: 0.8138974612624073, size: 10, color: "#ea8615" });
+graph.addNode("실선", { label: "실선", x: -0.14039733062786186, y: -0.0019099597010665548, size: 10, color: "#ea8615" });
+graph.addNode("조금", { label: "조금", x: -0.8944610872341696, y: -0.4012858935812622, size: 10, color: "#ea8615" });
+graph.addNode("이끼", { label: "이끼", x: -0.6384705800993689, y: 0.40685375899501497, size: 10, color: "#ea8615" });
+graph.addNode("우마", { label: "우마", x: -0.9450046329971384, y: 0.7752972346952995, size: 10, color: "#c686e9" });
+graph.addNode("정리정돈", { label: "정리정돈", x: 0.8925903843361185, y: 0.2292432003311442, size: 10, color: "#c686e9" });
+graph.addNode("원상", { label: "원상", x: 0.1642555855380019, y: -0.5405956095261495, size: 10, color: "#c686e9" });
+graph.addNode("중량", { label: "중량", x: 0.964224615199422, y: -0.48266478893541986, size: 10, color: "#5fc613" });
+graph.addNode("가설", { label: "가설", x: -0.9265451117511141, y: -0.1470722081980964, size: 10, color: "#00caff" });
+graph.addNode("자의", { label: "자의", x: -0.6935994228202556, y: -0.5528321286169933, size: 10, color: "#00caff" });
+graph.addNode("단순", { label: "단순", x: 0.5862417771327222, y: 0.8454848977922844, size: 10, color: "#00caff" });
+graph.addNode("과실", { label: "과실", x: 0.7564723783220979, y: -0.35953637617962997, size: 10, color: "#00caff" });
+graph.addNode("협소", { label: "협소", x: -0.998509353995723, y: -0.6653069114344243, size: 10, color: "#00caff" });
+graph.addNode("복공", { label: "복공", x: 0.09669946279400166, y: -0.2568384931799137, size: 10, color: "#00caff" });
+graph.addNode("하층", { label: "하층", x: 0.814387750693071, y: -0.926056838325799, size: 10, color: "#2e9072" });
+graph.addNode("얼굴", { label: "얼굴", x: 0.37252010523496537, y: -0.5830046423101456, size: 10, color: "#2e9072" });
+graph.addNode("불안전", { label: "불안전", x: -0.08510675345396956, y: -0.4638885923626108, size: 10, color: "#00caff" });
+graph.addNode("행동", { label: "행동", x: 0.8589280082203985, y: 0.285741163833781, size: 10, color: "#00caff" });
+graph.addNode("간의", { label: "간의", x: 0.0803946691224493, y: -0.3436859921863453, size: 10, color: "#5fc613" });
+graph.addNode("대차", { label: "대차", x: -0.0493963979751364, y: 0.037860727158986585, size: 10, color: "#00caff" });
+graph.addNode("다림", { label: "다림", x: -0.7592729333482342, y: 0.1515343849703581, size: 10, color: "#00caff" });
+graph.addNode("방법", { label: "방법", x: -0.06374340668793033, y: -0.6505748245943155, size: 10, color: "#00caff" });
+graph.addNode("포트", { label: "포트", x: -0.0632837163952491, y: -0.8902803840602371, size: 10, color: "#2e9072" });
+graph.addNode("드롭", { label: "드롭", x: -0.9718249494979287, y: 0.7904257254077331, size: 10, color: "#2e9072" });
+graph.addNode("패널", { label: "패널", x: -0.3549234929859928, y: -0.9179628396499713, size: 10, color: "#2e9072" });
+graph.addNode("손등", { label: "손등", x: -0.5790437379706215, y: 0.9250215273651696, size: 10, color: "#2e9072" });
+graph.addNode("조정", { label: "조정", x: -0.457271009325815, y: 0.48801091321916834, size: 10, color: "#2e9072" });
+graph.addNode("손위", { label: "손위", x: -0.28905007400391924, y: 0.7036314632448326, size: 10, color: "#2e9072" });
+graph.addNode("자세", { label: "자세", x: -0.7211195873409888, y: 0.5180154935915295, size: 10, color: "#00caff" });
+graph.addNode("실족", { label: "실족", x: 0.16374220905513637, y: 0.4278900455005823, size: 10, color: "#00caff" });
+graph.addNode("개인", { label: "개인", x: -0.7216336476052998, y: 0.1833765159272227, size: 10, color: "#00caff" });
+graph.addNode("불량", { label: "불량", x: 0.5450494050580086, y: 0.5447615303208277, size: 10, color: "#00caff" });
+graph.addNode("의견", { label: "의견", x: -0.29693993316966116, y: -0.9723937546715178, size: 10, color: "#00caff" });
+graph.addNode("실수", { label: "실수", x: 0.5700748714309045, y: -0.7380599508462455, size: 10, color: "#00caff" });
+graph.addNode("용접", { label: "용접", x: -0.5870828805921666, y: -0.9683428725991503, size: 10, color: "#ff5c81" });
+graph.addNode("위험", { label: "위험", x: 0.3100558745966471, y: 0.06522869924505992, size: 10, color: "#5fc613" });
+graph.addNode("물이", { label: "물이", x: 0.39237599353526775, y: -0.7456436297284226, size: 10, color: "#5fc613" });
+graph.addNode("산소", { label: "산소", x: -0.3018377419972942, y: 0.9134787559411877, size: 10, color: "#ff5c81" });
+graph.addNode("절단", { label: "절단", x: -0.3312893528870098, y: 0.4999750552636695, size: 10, color: "#ff5c81" });
+graph.addNode("단기", { label: "단기", x: -0.0600375511251805, y: -0.02703185352705817, size: 10, color: "#ff5c81" });
+graph.addNode("화상", { label: "화상", x: 0.3268625476095881, y: -0.2502980905019372, size: 10, color: "#ff5c81" });
+graph.addNode("호스", { label: "호스", x: -0.877196116966777, y: 0.07469356163338103, size: 10, color: "#ff5c81" });
+graph.addNode("용단", { label: "용단", x: -0.5832787637886174, y: -0.04922341295389554, size: 10, color: "#ff5c81" });
+graph.addNode("연료", { label: "연료", x: 0.6784039095691914, y: -0.6551803084403827, size: 10, color: "#ff5c81" });
+graph.addNode("치의", { label: "치의", x: -0.125322657650339, y: 0.47697892119047647, size: 10, color: "#ff5c81" });
+graph.addNode("본인", { label: "본인", x: -0.23116059234840103, y: -0.54821899050512, size: 10, color: "#00caff" });
+graph.addNode("인력", { label: "인력", x: -0.9306259301277993, y: 0.8645165813469295, size: 10, color: "#5fc613" });
+graph.addNode("미숙", { label: "미숙", x: 0.8373253592663057, y: 0.7220119530718931, size: 10, color: "#00caff" });
+graph.addNode("신호", { label: "신호", x: -0.12460910090135657, y: 0.02347843306774733, size: 10, color: "#5fc613" });
+graph.addNode("체계", { label: "체계", x: 0.18737572719103324, y: -0.010537129773210419, size: 10, color: "#5fc613" });
+graph.addNode("요소", { label: "요소", x: -0.914903327508731, y: -0.2775354837379669, size: 10, color: "#5fc613" });
+graph.addNode("인조", { label: "인조", x: -0.19943446893648997, y: -0.5482942598381815, size: 10, color: "#5fc613" });
+graph.addNode("형강", { label: "형강", x: -0.9623441509421096, y: 0.12901446848329345, size: 10, color: "#5fc613" });
+graph.addNode("의사소통", { label: "의사소통", x: -0.3341783706764818, y: -0.2420895353994279, size: 10, color: "#5fc613" });
+graph.addNode("일치", { label: "일치", x: -0.8617672565234493, y: 0.07342551099626493, size: 10, color: "#5fc613" });
+graph.addNode("자간", { label: "자간", x: 0.8597987418394213, y: 0.40421153301204904, size: 10, color: "#5fc613" });
+graph.addNode("기사", { label: "기사", x: -0.9081620241971562, y: -0.8034386539420635, size: 10, color: "#5fc613" });
+graph.addNode("상호", { label: "상호", x: -0.5931757302218683, y: -0.16033337385240198, size: 10, color: "#5fc613" });
+graph.addNode("제때", { label: "제때", x: 0.273470026196311, y: -0.2804128793093956, size: 10, color: "#5fc613" });
+graph.addNode("관계", { label: "관계", x: -0.3421474357197096, y: 0.20306783951795437, size: 10, color: "#5fc613" });
+graph.addNode("호수", { label: "호수", x: 0.953840829640541, y: -0.7689119397569537, size: 10, color: "#5fc613" });
+graph.addNode("배치", { label: "배치", x: -0.6244308070054352, y: -0.2958339871845843, size: 10, color: "#5fc613" });
+graph.addNode("양수기", { label: "양수기", x: 0.12544459009315645, y: 0.5053997718399152, size: 10, color: "#5fc613" });
+graph.addNode("콘크리트", { label: "콘크리트", x: 0.3464492795145524, y: -0.6364097005321787, size: 10, color: "#5fc613" });
 graph.addEdge("설치", "비계", { size: 1.011758, color: "#999999" });
 graph.addEdge("설치", "자재", { size: 0.781408, color: "#999999" });
 graph.addEdge("설치", "바닥", { size: 0.183927, color: "#999999" });
@@ -3180,8 +3186,46 @@ graph.addEdge("하부", "손등", { size: 0.047566, color: "#999999" });
 graph.addEdge("하부", "조정", { size: 0.045757, color: "#999999" });
 graph.addEdge("하부", "손위", { size: 0.04054, color: "#999999" });
 
-      // Instantiate sigma.js and render the graph
-      const sigmaInstance = new Sigma(graph, document.getElementById("container"));
+      // 시그마 인스턴스
+      const container = document.getElementById("container");
+      const renderer = new sigma.Sigma(graph, container);
+
+      let activeNodes = new Set();
+
+      // 노드 클릭 시
+      renderer.on("clickNode", ({ node }) => {
+        activeNodes = new Set([node]);
+
+        // 이웃 노드 추가
+        graph.forEachNeighbor(node, (neighbor) => {
+          activeNodes.add(neighbor);
+        });
+
+        // 노드 강조/비강조
+        renderer.setSetting("nodeReducer", (n, attrs) => {
+          if (!activeNodes.has(n)) {
+            return { ...attrs, label: '', color: '#ccc' };
+          }
+          return attrs;
+        });
+
+        // 엣지 표시 조절
+        renderer.setSetting("edgeReducer", (e, attrs) => {
+          const source = graph.source(e);
+          const target = graph.target(e);
+          if (!activeNodes.has(source) || !activeNodes.has(target)) {
+            return { ...attrs, hidden: true };
+          }
+          return attrs;
+        });
+      });
+
+      // 배경 클릭 시 초기화
+      renderer.on("clickStage", () => {
+        activeNodes.clear();
+        renderer.setSetting("nodeReducer", null);
+        renderer.setSetting("edgeReducer", null);
+      });
     </script>
   </body>
 </html>
