@@ -1,9 +1,8 @@
-
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>가설공사 네트워크 시각화 (Hover 시만 강조, 클릭 강조 유지)</title>
+    <title>가설공사 네트워크 시각화</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
     <style>
@@ -14,9 +13,11 @@
   <body>
     <div id="container"></div>
     <script>
-      const graph = new graphology.Graph();
+      window.addEventListener("DOMContentLoaded", () => {
+        const graph = new graphology.Graph();
+        const container = document.getElementById("container");
 
-      // 예시 노드 및 엣지 삽입
+        // 노드 및 엣지 추가
 graph.addNode("설치", { label: "설치", x: 0.029, y: -0.007, size: 25.60, color: "#c686e9" });
 graph.addNode("비계", { label: "비계", x: -0.525, y: 0.213, size: 27.00, color: "#c686e9" });
 graph.addNode("자재", { label: "자재", x: -0.200, y: 0.248, size: 19.65, color: "#c686e9" });
@@ -3185,75 +3186,55 @@ graph.addEdgeWithKey("10749", "하부", "얼굴", { size: 0.049690, color: "#999
 graph.addEdgeWithKey("10750", "하부", "손등", { size: 0.047566, color: "#999999" });
 graph.addEdgeWithKey("10751", "하부", "조정", { size: 0.045757, color: "#999999" });
 graph.addEdgeWithKey("10753", "하부", "손위", { size: 0.040540, color: "#999999" });
-        const renderer = new sigma.Sigma(graph, document.getElementById("container"));
-      
-      catch(err => console.error("스크립트 로딩 오류:", err));
 
-      const baseEdgeOpacity = 0.55;
-      let clickedNode = null;
-      let clickedNeighbors = new Set();
-
-      const renderer = new Sigma(graph, document.getElementById("container"), {
-        labelDensity: 1,
-        labelGridCellSize: 20,
-        defaultNodeLabelColor: '#000',
-        labelPosition: 'center',
-        labelAlignment: 'center',
-      });
-
-      function focusNode(nodeId) {
-        const neighbors = new Set();
-        graph.forEachNeighbor(nodeId, (n) => neighbors.add(n));
-
-        renderer.setSetting("nodeReducer", (n, attrs) => {
-          if (n === nodeId || neighbors.has(n)) {
-            return attrs;
-          } else {
-            return { ...attrs, label: '', color: '#ccc' };
-          }
+        const renderer = new sigma.Sigma(graph, container, {
+          labelDensity: 1,
+          labelGridCellSize: 20,
+          labelPosition: "inside",
+          labelAlignment: "center",
+          defaultNodeLabelColor: "#fff",
+          defaultLabelSize: 14
         });
 
-        renderer.setSetting("edgeReducer", (e, attrs) => {
-          const source = graph.source(e);
-          const target = graph.target(e);
-          if (source === nodeId || target === nodeId) {
-            return { ...attrs, color: 'rgba(105,105,105,1)' };
-          } else {
-            return { ...attrs, color: 'rgba(200,200,200,0.1)' };
-          }
-        });
-      }
+        const baseEdgeOpacity = 0.55;
+        let clickedNode = null;
+        let clickedNeighbors = new Set();
 
-      function clearFocus() {
-        renderer.setSetting("nodeReducer", null);
-        renderer.setSetting("edgeReducer", (e, attrs) => {
-          return { ...attrs, color: `rgba(105,105,105,${baseEdgeOpacity})` };
-        });
-      }
-
-      renderer.on("enterNode", (event) => {
-        if (!clickedNode) {
-          focusNode(event.node);
+        function focusNode(nodeId) {
+          const neighbors = new Set();
+          graph.forEachNeighbor(nodeId, (n) => neighbors.add(n));
+          renderer.setSetting("nodeReducer", (n, attrs) => {
+            return (n === nodeId || neighbors.has(n)) ? attrs : { ...attrs, label: '', color: '#ccc' };
+          });
+          renderer.setSetting("edgeReducer", (e, attrs) => {
+            const source = graph.source(e), target = graph.target(e);
+            return (source === nodeId || target === nodeId)
+              ? { ...attrs, color: 'rgba(105,105,105,1)' }
+              : { ...attrs, color: 'rgba(200,200,200,0.1)' };
+          });
         }
-      });
 
-      renderer.on("leaveNode", (event) => {
-        if (!clickedNode) {
+        function clearFocus() {
+          renderer.setSetting("nodeReducer", null);
+          renderer.setSetting("edgeReducer", (e, attrs) => ({
+            ...attrs,
+            color: `rgba(105,105,105,${baseEdgeOpacity})`
+          }));
+        }
+
+        renderer.on("enterNode", (e) => { if (!clickedNode) focusNode(e.node); });
+        renderer.on("leaveNode", () => { if (!clickedNode) clearFocus(); });
+        renderer.on("clickNode", (e) => {
+          clickedNode = e.node;
+          clickedNeighbors = new Set();
+          graph.forEachNeighbor(clickedNode, (n) => clickedNeighbors.add(n));
+          focusNode(clickedNode);
+        });
+        renderer.on("clickStage", () => {
+          clickedNode = null;
+          clickedNeighbors.clear();
           clearFocus();
-        }
-      });
-
-      renderer.on("clickNode", (event) => {
-        clickedNode = event.node;
-        clickedNeighbors = new Set();
-        graph.forEachNeighbor(clickedNode, (n) => clickedNeighbors.add(n));
-        focusNode(clickedNode);
-      });
-
-      renderer.on("clickStage", () => {
-        clickedNode = null;
-        clickedNeighbors.clear();
-        clearFocus();
+        });
       });
     </script>
   </body>
