@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>가설공사 네트워크 시각화</title>
+    <!-- Sigma.js 및 Graphology 로딩 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
     <style>
@@ -14,7 +15,10 @@
   <body>
     <div id="container"></div>
     <script>
+      // 1. 새로운 Graphology 그래프 생성
       const graph = new graphology.Graph();
+
+      // 2. 노드 추가 (자동 생성된 코드 삽입됨)
       graph.addNode("설치", { label: "설치", x: 291.733612, y: -68.165535, size: 23.7037033, color: "#c686e9" });
 graph.addNode("비계", { label: "비계", x: -5246.567383, y: 2132.343506, size: 25.0, color: "#c686e9" });
 graph.addNode("자재", { label: "자재", x: -1996.664062, y: 2483.019287, size: 18.194444275000002, color: "#c686e9" });
@@ -152,6 +156,8 @@ graph.addNode("배치", { label: "배치", x: 24313.484375, y: -11270.564453, si
 graph.addNode("양수기", { label: "양수기", x: 23542.652344, y: -12405.151367, size: 7.5, color: "#5fc613" });
 graph.addNode("콘크리트", { label: "콘크리트", x: 22953.291016, y: -9286.882812, size: 8.14814835, color: "#5fc613" });
 
+
+      // 3. 엣지 추가 (자동 생성된 코드 삽입됨)
       graph.addEdgeWithKey("e0", "설치", "비계", { size: 1.011758, color: "rgba(153, 153, 153, 0.6)" });
 graph.addEdgeWithKey("e1", "설치", "자재", { size: 0.781408, color: "rgba(153, 153, 153, 0.6)" });
 graph.addEdgeWithKey("e2", "설치", "바닥", { size: 0.183927, color: "rgba(153, 153, 153, 0.6)" });
@@ -3186,15 +3192,21 @@ graph.addEdgeWithKey("e3030", "하부", "조정", { size: 0.045757, color: "rgba
 graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(153, 153, 153, 0.6)" });
 
 
+      // 4. Sigma 인스턴스 생성하여 렌더링
       const renderer = new Sigma(graph, document.getElementById("container"));
+
+      // 5. 현재 강조 중인 노드 집합 저장용 Set
       let activeNodes = new Set();
 
+      // 6. 강조할 노드를 설정하는 함수 (노드 ID를 받아 인접 노드 포함 Set 생성)
       function updateFocus(nodeId) {
+        // 강조할 노드 + 연결된 이웃 노드 저장
         activeNodes = new Set([nodeId]);
         graph.forEachNeighbor(nodeId, function (neighbor) {
           activeNodes.add(neighbor);
         });
 
+        // 6-1. 노드 강조 설정: 선택된 노드만 원래 색, 나머지는 회색 처리
         renderer.setSetting("nodeReducer", function (n, attrs) {
           if (!activeNodes.has(n)) {
             return { ...attrs, label: '', color: '#ccc' };
@@ -3202,6 +3214,7 @@ graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(
           return attrs;
         });
 
+        // 6-2. 엣지 강조 설정: 연결된 엣지는 진하게, 그 외 엣지는 흐리게
         renderer.setSetting("edgeReducer", function (e, attrs) {
           const source = graph.source(e);
           const target = graph.target(e);
@@ -3212,20 +3225,24 @@ graph.addEdgeWithKey("e3031", "하부", "손위", { size: 0.04054, color: "rgba(
         });
       }
 
+      // 7. 노드 클릭 시 강조
       renderer.on("clickNode", function (event) {
         updateFocus(event.node);
       });
 
+      // 8. 마우스를 노드에 올렸을 때도 동일하게 강조
       renderer.on("enterNode", function (event) {
         updateFocus(event.node);
       });
 
+      // 9. 마우스가 노드에서 나가면 강조 해제
       renderer.on("leaveNode", function () {
         activeNodes.clear();
         renderer.setSetting("nodeReducer", null);
         renderer.setSetting("edgeReducer", null);
       });
 
+      // 10. 배경 클릭 시 강조 해제 (그래프 전체 초기화)
       renderer.on("clickStage", function () {
         activeNodes.clear();
         renderer.setSetting("nodeReducer", null);
