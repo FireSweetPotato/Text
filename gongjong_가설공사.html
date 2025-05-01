@@ -54,25 +54,32 @@
     #sidebar button:hover {
       background-color: #90a590;
     }
-    #content {
-      flex-grow: 1;
-      background-color: #e8eee7;
+
+    #gephi-container {
+      width: 60%;
+      height: 100%;
+      display: none;
+      border-right: 4px solid #183524;
+    }
+    #gephi-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #visual-content {
+      width: 100%;
+      height: 100%;
+      padding: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 30px;
+      background-color: #e8eee7;
     }
-    #content img, #content iframe {
+    #visual-content img {
       max-width: 100%;
       max-height: 90%;
       border-radius: 8px;
-      display: none;
-    }
-    #content iframe {
-      width: 100%;
-      height: 90vh;
-      min-height: 500px;
-      border: 4px solid #183524;
       display: none;
     }
   </style>
@@ -94,8 +101,12 @@
       <button onclick="showViz('hierarchy')">주제 계층도</button>
       <button onclick="showViz('wordcloud')">워드클라우드</button>
     </div>
-    <div id="content">
+
+    <div id="gephi-container">
       <iframe id="gephi" src="gongjong_가설공사_gephi.html"></iframe>
+    </div>
+
+    <div id="visual-content">
       <img id="barchart" src="★최종 분석 결과★/가설공사/가설공사_barchart.png" alt="막대 그래프">
       <img id="heatmap" src="★최종 분석 결과★/가설공사/가설공사_heatmap.png" alt="히트맵">
       <img id="topics" src="★최종 분석 결과★/가설공사/가설공사_topics.png" alt="주제 분포도">
@@ -105,12 +116,22 @@
   </main>
   <script>
     function showViz(id) {
-      const all = ['gephi', 'barchart', 'heatmap', 'topics', 'hierarchy', 'wordcloud'];
-      all.forEach(el => {
-        const item = document.getElementById(el);
-        item.style.display = (el === id) ? 'block' : 'none';
-      });
+      const gephiContainer = document.getElementById("gephi-container");
+      const visualContent = document.getElementById("visual-content");
+      const allImgs = visualContent.querySelectorAll("img");
+
+      if (id === "gephi") {
+        gephiContainer.style.display = "block";
+        visualContent.style.width = "40%";
+        allImgs.forEach(img => img.style.display = "none");
+      } else {
+        gephiContainer.style.display = "none";
+        visualContent.style.width = "100%";
+        allImgs.forEach(img => img.style.display = (img.id === id ? "block" : "none"));
+      }
     }
+
+    // 기본: 주제 분포도
     showViz('topics');
   </script>
 </body>
