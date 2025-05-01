@@ -5,50 +5,106 @@
   <meta charset="UTF-8">
   <title>철골공사 시각화</title>
   <style>
-    body { margin: 0; font-family: 'Noto Sans KR', sans-serif; background-color: #183524; color: white; }
-    header { display: flex; align-items: center; padding: 10px; background-color: #eee; }
-    header img { height: 30px; margin-right: 10px; cursor: pointer; }
-    main { display: flex; flex-direction: column; align-items: center; padding: 20px; }
-    .button-group { margin: 20px 0; }
-    .button-group button { margin: 0 8px; padding: 10px 18px; font-size: 16px; border: none; border-radius: 6px;
-                           background-color: #eee; color: #183524; cursor: pointer; }
-    .button-group button:hover { background-color: #ccc; }
-    .visualization { margin-top: 20px; max-width: 90%; max-height: 600px; }
-    .visualization img { width: 100%; height: auto; border: 2px solid #eee; border-radius: 8px; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #e8eee7;
+    }
+    header {
+      background-color: #e8eee7;
+      color: #183524;
+      padding: 10px 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    header img {
+      height: 36px; /* 기존보다 20% 크게 */
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    h1 {
+      font-size: 24px;
+      text-align: center;
+    }
+    main {
+      display: flex;
+      height: calc(100vh - 50px);
+    }
+    #sidebar {
+      background-color: #183524;
+      width: 250px;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    #sidebar button {
+      background-color: #a3b29f;
+      color: #183524;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    #sidebar button:hover {
+      background-color: #90a590;
+    }
+    #content {
+      flex-grow: 1;
+      background-color: #e8eee7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+    #content img {
+      max-width: 100%;
+      max-height: 90%;
+      border-radius: 8px;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <header>
-    <a href="index.html"><img src="홈버튼.png" alt="홈으로"></a>
-    <a href="select.html"><img src="뒤로가기.png" alt="선택화면"></a>
+    <a href="index.html"><img src="홈버튼.png" alt="홈"></a>
+    <h1>철골공사</h1>
   </header>
   <main>
-    <h1>철골공사 시각화 자료</h1>
-    <div class="button-group">
-      <button onclick="showImage('gephi')">Gephi</button>
-      <button onclick="showImage('barchart')">막대 그래프</button>
-      <button onclick="showImage('heatmap')">히트맵</button>
-      <button onclick="showImage('topics')">주제 분포도</button>
-      <button onclick="showImage('hierarchy')">주제 계층도</button>
-      <button onclick="showImage('wordcloud')">워드클라우드</button>
+    <div id="sidebar">
+      <button onclick="location.href='gongjong_철골공사_gephi.html'">Gephi</button>
+      <button onclick="showViz('barchart')">막대 그래프</button>
+      <button onclick="showViz('heatmap')">히트맵</button>
+      <button onclick="showViz('topics')">주제 분포도</button>
+      <button onclick="showViz('hierarchy')">주제 계층도</button>
+      <button onclick="showViz('wordcloud')">워드클라우드</button>
     </div>
-    <div class="visualization">
-      <img id="vizImage" src="★최종 분석 결과★/철골공사/철골공사_topics.png" alt="시각화 이미지">
+    <div id="content">
+      <img id="barchart" src="★최종 분석 결과★/철골공사/철골공사_barchart.png" alt="막대 그래프">
+      <img id="heatmap" src="★최종 분석 결과★/철골공사/철골공사_heatmap.png" alt="히트맵">
+      <img id="topics" src="★최종 분석 결과★/철골공사/철골공사_topics.png" alt="주제 분포도">
+      <img id="hierarchy" src="★최종 분석 결과★/철골공사/철골공사_hierarchy.png" alt="주제 계층도">
+      <img id="wordcloud" src="★최종 분석 결과★/철골공사/철골공사_wordcloud.png" alt="워드클라우드">
     </div>
   </main>
   <script>
-    function showImage(type) {
-      const base = "★최종 분석 결과★/철골공사/철골공사_";
-      const suffix = {
-        gephi: "gephi.png",
-        barchart: "barchart.png",
-        heatmap: "heatmap.png",
-        topics: "topics.png",
-        hierarchy: "hierarchy.png",
-        wordcloud: "wordcloud.png"
-      };
-      document.getElementById("vizImage").src = base + suffix[type];
+    function showViz(id) {
+      if (id === 'gephi') {
+        location.href = 'gongjong_철골공사_gephi.html';
+        return;
+      }
+
+      const all = ['barchart', 'heatmap', 'topics', 'hierarchy', 'wordcloud'];
+      all.forEach(el => {
+        const item = document.getElementById(el);
+        item.style.display = (el === id) ? 'block' : 'none';
+      });
     }
+
+    showViz('topics');
   </script>
 </body>
 </html>
