@@ -22,9 +22,8 @@
         .then(code => {
           eval(code);  // 노드 및 엣지 삽입
 
-          // DOM이 완전히 렌더링된 이후 Sigma 생성
           requestAnimationFrame(() => {
-            const renderer = new sigma.Sigma(graph, container, {
+            const renderer = new Sigma(graph, container, {
               labelDensity: 1,
               labelGridCellSize: 20,
               labelPosition: "inside",
