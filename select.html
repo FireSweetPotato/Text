@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>공종 선택 화면</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #88A087;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #eee;
+      border-bottom: 1px solid #ccc;
+    }
+    header img {
+      height: 32px;
+      cursor: pointer;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 60px);
+      background-color: #183524;
+      color: white;
+    }
+    h1 {
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 80%;
+      max-width: 900px;
+    }
+    .card {
+      background-color: #eee;
+      color: #183524;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .card:hover {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="홈화면.png" alt="홈으로"></a>
+  </header>
+  <main>
+    <h1>공종 선택</h1>
+    <div class="grid">
+      <div class="card" onclick="location.href='gongjong_가설공사.html'">가설공사</div>
+      <div class="card" onclick="location.href='gongjong_기계설비공사.html'">기계설비공사</div>
+      <div class="card" onclick="location.href='gongjong_철근콘크리트공사.html'">철근콘크리트공사</div>
+      <div class="card" onclick="location.href='gongjong_철골공사.html'">철골공사</div>
+      <div class="card" onclick="location.href='gongjong_해체및철거공사.html'">해체 및 철거공사</div>
+      <div class="card" onclick="location.href='gongjong_토공사.html'">토공사</div>
+    </div>
+  </main>
+</body>
+</html>
