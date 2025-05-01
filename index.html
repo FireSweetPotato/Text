@@ -7,10 +7,10 @@
     body {
       margin: 0;
       font-family: 'Noto Sans KR', sans-serif;
-      background-color: #88A087;
+      background-color: #88A087; /* 배경색: 연한 초록색 */
     }
     header {
-      background-color: #eee;
+      background-color: #eee; /* 헤더 배경: 밝은 회색 */
       padding: 10px 20px;
       font-weight: bold;
       display: flex;
@@ -18,25 +18,26 @@
       align-items: center;
     }
     #author {
-      color: #333;
+      color: #333; /* 작성자 이름 색: 어두운 회색 */
     }
     #gongjong-list {
-      color: #aa0000;
+      color: #aa0000; /* 공종 목록 색: 빨간색 */
     }
     main {
       display: flex;
       flex-direction: row;
-      background-color: #183524;
+      background-color: #183524; /* 메인 배경: 어두운 초록색 */
       color: white;
-      height: calc(100vh - 48px);
+      height: calc(100vh - 48px); /* 화면 높이에서 헤더 높이를 뺀 크기 */
     }
     #left {
-      width: 50%;
-      background: url("텍스트마이닝.png") no-repeat center center;
-      background-size: contain;
+      width: 50%; /* 왼쪽 영역: 화면의 반 */
+      background: url("대표이미지.png") no-repeat center center; /* ★수정: 대표이미지.png를 배경으로 설정★ */
+      background-size: contain; /* 이미지가 잘 보이도록 크기 조정 */
+      background-color: #183524; /* 이미지가 없을 때 배경색 */
     }
     #right {
-      width: 50%;
+      width: 50%; /* 오른쪽 영역: 화면의 반 */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -53,13 +54,13 @@
       padding: 12px 24px;
       font-size: 16px;
       border: none;
-      background-color: #eee;
-      color: #183524;
+      background-color: #eee; /* 버튼 배경: 밝은 회색 */
+      color: #183524; /* 버튼 글자: 어두운 초록색 */
       cursor: pointer;
       border-radius: 6px;
     }
     .start-button:hover {
-      background-color: #ddd;
+      background-color: #ddd; /* 버튼 hover: 조금 더 어두운 회색 */
     }
   </style>
   <!-- 필수 스크립트 추가 -->
