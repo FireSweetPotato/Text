@@ -20,7 +20,12 @@
       fetch("공종별_forceAtlas2/토공사.txt")
         .then(res => res.text())
         .then(code => {
-          eval(code);  // 노드 및 엣지 삽입
+          eval(code);
+          // 모든 노드의 크기를 절반으로 줄임
+          graph.forEachNode((node, attrs) => {
+            graph.setNodeAttribute(node, "size", (attrs.size || 1) * 0.5);
+          });
+          // 노드 및 엣지 삽입
 
           requestAnimationFrame(() => {
             const renderer = new Sigma(graph, container, {
