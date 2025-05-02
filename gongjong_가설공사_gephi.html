@@ -22,6 +22,11 @@
         .then(code => {
           eval(code);  // 노드 및 엣지 삽입
 
+          // 모든 노드의 크기를 절반으로 줄임
+          graph.forEachNode((node, attrs) => {
+            graph.setNodeAttribute(node, "size", (attrs.size || 1) * 0.5);
+          });
+
           requestAnimationFrame(() => {
             const renderer = new Sigma(graph, container, {
               labelDensity: 1,
