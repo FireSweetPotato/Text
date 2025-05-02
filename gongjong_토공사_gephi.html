@@ -48,8 +48,8 @@
               renderer.setSetting("edgeReducer", (e, attrs) => {
                 const s = graph.source(e), t = graph.target(e);
                 return s === nodeId || t === nodeId
-                  ? { ...attrs, color: 'rgba(105,105,105,1)' }
-                  : { ...attrs, color: 'rgba(200,200,200,0.1)' };
+                  ? { ...attrs, color: 'rgba(150,150,150,1)' }
+                  : { ...attrs, color: 'rgba(200,200,200,0.1)', size: (attrs.size || 1) };
               });
             }
 
@@ -57,7 +57,8 @@
               renderer.setSetting("nodeReducer", null);
               renderer.setSetting("edgeReducer", (e, attrs) => ({
                 ...attrs,
-                color: `rgba(150,150,150,${baseEdgeOpacity})`
+                color: `rgba(150,150,150,${baseEdgeOpacity})`,
+                size: (attrs.size || 1)
               }));
             }
 
